@@ -16,7 +16,7 @@ class Currency {
     }
 }
 
-class CurrencyConverter: Currency {
+class CurrencyConverter{
     
     func convertCurrency(value: Double, startCurrency: Currency, targetCurrency: Currency) -> (convertedValue: Double, targetCurrency: String)?{
         
@@ -67,7 +67,7 @@ class CurrencyConverter: Currency {
     }
 }
 
-var currencyConverter = CurrencyConverter(currencyType: "USD")
+var currencyConverter = CurrencyConverter()
 
 let EUR = Currency(currencyType: "EUR")
 let USD = Currency(currencyType: "USD")
