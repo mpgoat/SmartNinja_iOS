@@ -13,10 +13,6 @@ Smiselno izberi podatkovne tipe, le stanje naj bo posebnega tipa, ki je enum. Gl
 import Foundation
 
 
-enum Priority{
-    case Normal, High, Mega
-}
-
 class Task {
     
     var dateOfCreation: NSDate
