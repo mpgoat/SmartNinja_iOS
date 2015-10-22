@@ -22,20 +22,20 @@ class ViewController: UIViewController {
         updateQueueText()
     }
     
-    var priority = Priority(rawValue: "Normal")
+    var priority = Priority(rawValue: "Normal")!
 
     @IBAction func selectPriorityButton(sender: UIButton) {
         if let prioritySelected = sender.currentTitle{
             switch prioritySelected{
                 case "Normal":
                     priority = Priority(rawValue: "Normal")!
-                    self.taskPriorityTextField.text = "Normal"
+                    taskPriorityTextField.text = "Normal"
                 case "High":
                     priority = Priority(rawValue: "High")!
-                    self.taskPriorityTextField.text = "High"
+                    taskPriorityTextField.text = "High"
                 case "Mega":
                     priority = Priority(rawValue: "Mega")!
-                    self.taskPriorityTextField.text = "Mega"
+                    taskPriorityTextField.text = "Mega"
                 default: "Normal"
             }
         }
@@ -53,12 +53,12 @@ class ViewController: UIViewController {
                 createAlert("Details Content is Empty!", alertMessage: "Please enter some details")
             }
             else{
-                let newTask = Task(taskName: taskName, priority: priority!, details: detailsTextToEnter, status: .Started)
+                let newTask = Task(taskName: taskName, priority: priority, details: detailsTextToEnter, status: .Started)
                 taskManager.addTask(newTask)
                 
                 //reset input fields
-                self.taskPriorityTextField.text = "Normal"
-                self.taskNameTextField.text = ""
+                taskPriorityTextField.text = "Normal"
+                taskNameTextField.text = ""
                 //update how many tasks are stored
                 updateQueueText()
             }
@@ -66,7 +66,7 @@ class ViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.taskPriorityTextField.enabled = false
+        taskPriorityTextField.enabled = false
         let tapOutsideOfKeyboard: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "DismissKeyboard")
         view.addGestureRecognizer(tapOutsideOfKeyboard)
     }
@@ -82,7 +82,7 @@ class ViewController: UIViewController {
     }
     
     func updateQueueText(){
-        self.showAlerts.text = taskManager.returnNumberOfTasksInQueue()
+        showAlerts.text = taskManager.returnNumberOfTasksInQueue()
     }
 
 }

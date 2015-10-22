@@ -28,25 +28,25 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
             switch convertToCurrency{
             case "To USD":
                 targetCurrency = Currency(currencyType: "USD")
-                self.changedTargetCurrency.text = "USD"
-                self.toUsdButton.selected = true
-                self.toCadButton.selected = false
-                self.toJpyButton.selected = false
-                self.showConvertedResult.text = "0.0"
+                changedTargetCurrency.text = "USD"
+                toUsdButton.selected = true
+                toCadButton.selected = false
+                toJpyButton.selected = false
+                showConvertedResult.text = "0.0"
             case "To JPY":
                 targetCurrency = Currency(currencyType: "JPY")
-                self.changedTargetCurrency.text = "JPY"
-                self.toUsdButton.selected = false
-                self.toCadButton.selected = false
-                self.toJpyButton.selected = true
-                self.showConvertedResult.text = "0.0"
+                changedTargetCurrency.text = "JPY"
+                toUsdButton.selected = false
+                toCadButton.selected = false
+                toJpyButton.selected = true
+                showConvertedResult.text = "0.0"
             case "To CAD":
                 targetCurrency = Currency(currencyType: "CAD")
-                self.changedTargetCurrency.text = "CAD"
-                self.toUsdButton.selected = false
-                self.toCadButton.selected = true
-                self.toJpyButton.selected = false
-                self.showConvertedResult.text = "0.0"
+                changedTargetCurrency.text = "CAD"
+                toUsdButton.selected = false
+                toCadButton.selected = true
+                toJpyButton.selected = false
+                showConvertedResult.text = "0.0"
             default: "To USD"
             }
         }
@@ -59,8 +59,8 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
             
             let convertedValue = currencyConverterObject.convertCurrency(validNumbers, startCurrency: startCurrency, targetCurrency: targetCurrency)
             print(convertedValue)
-            self.showConvertedResult.text = "\(convertedValue!.0)"
-            self.showConvertedResult.hidden = false
+            showConvertedResult.text = "\(convertedValue!.0)"
+            showConvertedResult.hidden = false
         }
         else{ // ne dela ker je double zmeraj valid, tudi ce so same pike vrne 0.0 wtf?
             let alert = UIAlertController(title: "Invalid number!", message:"VAlid numbers only have one . !", preferredStyle: .Alert)
