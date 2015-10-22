@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="DN2" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="gJs-KQ-6lV">
+                                <rect key="frame" x="220" y="71" width="161" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Normal" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="n5r-gp-G47">
+                                <rect key="frame" x="221" y="147" width="161" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter Details" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="YDT-Nc-Au8">
+                                <rect key="frame" x="221" y="270" width="161" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n3U-6g-o05">
+                                <rect key="frame" x="250" y="318" width="103" height="42"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" title="Add Task"/>
+                                <connections>
+                                    <action selector="addTask:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lLc-IE-XI9"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Task Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hok-FG-AsN">
+                                <rect key="frame" x="239" y="28" width="123" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Task Priority" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFB-GR-cR5">
+                                <rect key="frame" x="233" y="109" width="136" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rOL-c2-XXc">
+                                <rect key="frame" x="263" y="232" width="76" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4jl-yq-YC7">
+                                <rect key="frame" x="396" y="186" width="151" height="42"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" title="Mega"/>
+                                <connections>
+                                    <action selector="selectPriorityButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZuM-GC-Ehe"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sii-aL-Ls6">
+                                <rect key="frame" x="226" y="185" width="151" height="42"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" title="High"/>
+                                <connections>
+                                    <action selector="selectPriorityButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1SB-rI-jJE"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aNd-Fr-ovI">
+                                <rect key="frame" x="60" y="186" width="151" height="42"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" title="Normal"/>
+                                <connections>
+                                    <action selector="selectPriorityButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="EuF-Cm-g8H"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currently there are 0 tasks in queue" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UN4-bM-9Fl">
+                                <rect key="frame" x="0.0" y="368" width="600" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OmX-UE-QYa">
+                                <rect key="frame" x="247" y="406" width="106" height="42"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" title="Delete All"/>
+                                <connections>
+                                    <action selector="deleteAll:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UjE-bs-69n"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="mFB-GR-cR5" firstAttribute="centerX" secondItem="gJs-KQ-6lV" secondAttribute="centerX" id="0hx-7q-EZY"/>
+                            <constraint firstItem="sii-aL-Ls6" firstAttribute="leading" secondItem="aNd-Fr-ovI" secondAttribute="trailing" constant="15" id="1A6-fL-AnE"/>
+                            <constraint firstItem="rOL-c2-XXc" firstAttribute="top" secondItem="sii-aL-Ls6" secondAttribute="bottom" constant="5" id="3Fl-Un-WN1"/>
+                            <constraint firstItem="gJs-KQ-6lV" firstAttribute="top" secondItem="hok-FG-AsN" secondAttribute="bottom" constant="13" id="3RV-Yq-Uq3"/>
+                            <constraint firstItem="n5r-gp-G47" firstAttribute="centerX" secondItem="mFB-GR-cR5" secondAttribute="centerX" id="3aC-rW-go7"/>
+                            <constraint firstItem="n3U-6g-o05" firstAttribute="centerX" secondItem="YDT-Nc-Au8" secondAttribute="centerX" id="8g1-Yx-aJl"/>
+                            <constraint firstItem="OmX-UE-QYa" firstAttribute="top" secondItem="UN4-bM-9Fl" secondAttribute="bottom" constant="8" id="AQn-4j-aGt"/>
+                            <constraint firstItem="sii-aL-Ls6" firstAttribute="top" secondItem="n5r-gp-G47" secondAttribute="bottom" constant="8" id="BrJ-M7-bzR"/>
+                            <constraint firstItem="aNd-Fr-ovI" firstAttribute="top" secondItem="n5r-gp-G47" secondAttribute="bottom" constant="9" id="Htn-7L-gkD"/>
+                            <constraint firstItem="YDT-Nc-Au8" firstAttribute="width" secondItem="n5r-gp-G47" secondAttribute="width" id="Iab-CL-1sb"/>
+                            <constraint firstItem="YDT-Nc-Au8" firstAttribute="top" secondItem="rOL-c2-XXc" secondAttribute="bottom" constant="8" id="J96-aK-wrx"/>
+                            <constraint firstItem="n3U-6g-o05" firstAttribute="top" secondItem="YDT-Nc-Au8" secondAttribute="bottom" constant="18" id="JBA-g8-xHG"/>
+                            <constraint firstItem="mFB-GR-cR5" firstAttribute="top" secondItem="gJs-KQ-6lV" secondAttribute="bottom" constant="8" id="JUC-MG-1fV"/>
+                            <constraint firstItem="aNd-Fr-ovI" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="40" id="K3t-qh-jd3"/>
+                            <constraint firstItem="rOL-c2-XXc" firstAttribute="centerX" secondItem="sii-aL-Ls6" secondAttribute="centerX" id="Lk2-Ia-YnD"/>
+                            <constraint firstItem="sii-aL-Ls6" firstAttribute="width" secondItem="4jl-yq-YC7" secondAttribute="width" id="NFq-4d-FvH"/>
+                            <constraint firstItem="sii-aL-Ls6" firstAttribute="width" secondItem="aNd-Fr-ovI" secondAttribute="width" id="QSx-De-loY"/>
+                            <constraint firstItem="hok-FG-AsN" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="T35-Qy-cyj"/>
+                            <constraint firstItem="OmX-UE-QYa" firstAttribute="centerX" secondItem="UN4-bM-9Fl" secondAttribute="centerX" id="W6l-j2-CKk"/>
+                            <constraint firstItem="hok-FG-AsN" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="WjL-hM-Pxk"/>
+                            <constraint firstItem="YDT-Nc-Au8" firstAttribute="centerX" secondItem="rOL-c2-XXc" secondAttribute="centerX" id="htR-YK-2xk"/>
+                            <constraint firstItem="UN4-bM-9Fl" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="n3Q-AK-Zfb"/>
+                            <constraint firstItem="n5r-gp-G47" firstAttribute="top" secondItem="mFB-GR-cR5" secondAttribute="bottom" constant="8" id="q9p-W4-vfk"/>
+                            <constraint firstItem="4jl-yq-YC7" firstAttribute="leading" secondItem="sii-aL-Ls6" secondAttribute="trailing" constant="19" id="qZM-M0-vcn"/>
+                            <constraint firstItem="gJs-KQ-6lV" firstAttribute="centerX" secondItem="hok-FG-AsN" secondAttribute="centerX" id="sNu-4r-q9y"/>
+                            <constraint firstItem="4jl-yq-YC7" firstAttribute="top" secondItem="n5r-gp-G47" secondAttribute="bottom" constant="9" id="sZG-dx-hya"/>
+                            <constraint firstItem="n5r-gp-G47" firstAttribute="width" secondItem="gJs-KQ-6lV" secondAttribute="width" id="tWD-MA-QYj"/>
+                            <constraint firstItem="UN4-bM-9Fl" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="v8m-Co-3PT"/>
+                            <constraint firstItem="UN4-bM-9Fl" firstAttribute="top" secondItem="n3U-6g-o05" secondAttribute="bottom" constant="8" id="zf1-1H-Atm"/>
+                            <constraint firstItem="sii-aL-Ls6" firstAttribute="centerX" secondItem="n5r-gp-G47" secondAttribute="centerX" id="zfx-1N-9xQ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="detailsTextField" destination="YDT-Nc-Au8" id="kLY-zB-rmJ"/>
+                        <outlet property="showAlerts" destination="UN4-bM-9Fl" id="OBM-bh-ueJ"/>
+                        <outlet property="taskNameTextField" destination="gJs-KQ-6lV" id="u7h-kZ-gOj"/>
+                        <outlet property="taskPriorityTextField" destination="n5r-gp-G47" id="Xv1-7x-qDW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="360" y="526"/>
+        </scene>
+    </scenes>
+</document>
