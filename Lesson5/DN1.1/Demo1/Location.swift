@@ -51,6 +51,7 @@ class Location : NSObject, CLLocationManagerDelegate {
                 }
 
                 if let city = placeMark.addressDictionary?["City"] as? String{
+                    returnValue = city
                     print(city)
                 }
 
@@ -59,7 +60,6 @@ class Location : NSObject, CLLocationManagerDelegate {
                 }
 
                 if let country = placeMark.addressDictionary?["Country"] as? String{
-                    returnValue = country
                     print(country)
                 }
         }

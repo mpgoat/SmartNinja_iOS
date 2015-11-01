@@ -89,6 +89,13 @@
                                     <action selector="getLocation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WgE-3G-lwa"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="City" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NWo-k4-nmS">
+                                <rect key="frame" x="36" y="180" width="31" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -118,6 +125,7 @@
                     </view>
                     <connections>
                         <outlet property="changedTargetCurrency" destination="hXT-h7-5Z6" id="dfq-sY-BrF"/>
+                        <outlet property="cityLabel" destination="NWo-k4-nmS" id="py6-is-weF"/>
                         <outlet property="convertButton" destination="pox-SF-Hqg" id="wgE-gN-S00"/>
                         <outlet property="currencyInputTextField" destination="15W-34-08I" id="512-bg-Qex"/>
                         <outlet property="showConvertedResult" destination="Nnl-W7-0Xa" id="is9-kE-A4a"/>

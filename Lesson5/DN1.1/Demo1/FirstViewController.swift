@@ -17,6 +17,7 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var convertButton: UIButton!
     @IBOutlet weak var showConvertedResult: UILabel!
     @IBOutlet weak var changedTargetCurrency: UILabel!
+    @IBOutlet weak var cityLabel: UILabel!
     
     @IBOutlet weak var toUsdButton: UIButton!
     @IBOutlet weak var toCadButton: UIButton!
@@ -24,8 +25,10 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func getLocation(sender: UIButton){
         if let koordinate = location.getCurrentLocation(){
+            print(koordinate)
             let mesto = location.getUsersClosestCity(koordinate)
-            print("mesta ne dobim pravocasno \(mesto)")
+            cityLabel.text = mesto
+            print("mesta ne dobim pravocasno: \(mesto)")
             
             switch mesto{
                 case "Ljubljana":
@@ -78,7 +81,7 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
             showConvertedResult.hidden = false
         }
         else{
-            let alert = UIAlertController(title: "Invalid number!", message:"VAlid numbers only have one . !", preferredStyle: .Alert)
+            let alert = UIAlertController(title: "Invalid number!", message:"Please type a valid number", preferredStyle: .Alert)
             alert.addAction(UIAlertAction(title: "OK", style: .Default) { _ in })
             self.presentViewController(alert, animated: true){}
         }
