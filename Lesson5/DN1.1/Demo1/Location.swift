@@ -19,6 +19,29 @@ class Location : NSObject, CLLocationManagerDelegate {
         manager.requestWhenInUseAuthorization()
     }
     
+    func displayLocaitonInfo(placeMark: CLPlacemark) -> [String]{
+        var output = [String]()
+        if let locationName = placeMark.addressDictionary?["Name"] as? String{
+            output.append(locationName)
+        }
+        if let street = placeMark.addressDictionary?["Thoroughfare"] as? String{
+            output.append(street)
+        }
+        
+        if let city = placeMark.addressDictionary?["City"] as? String{
+            output.append(city)
+        }
+        
+        if let zip = placeMark.addressDictionary?["ZIP"] as? String{
+            output.append(zip)
+        }
+        
+        if let country = placeMark.addressDictionary?["Country"] as? String{
+            output.append(country)
+        }
+        return output
+    }
+    
     func getCurrentLocation() -> CLLocation?{
         if let lokacija = manager.location{
             return lokacija
@@ -26,44 +49,17 @@ class Location : NSObject, CLLocationManagerDelegate {
         return nil
     }
     
-    func getUsersClosestCity(coordinates: CLLocation) -> String{
-        var returnValue = ""
+    func getUsersClosestCity(coordinates: CLLocation, completion: (answer: [String]) -> Void){
+        
         let geoCoder = CLGeocoder()
         let location = CLLocation(latitude: coordinates.coordinate.latitude, longitude: coordinates.coordinate.longitude)
         geoCoder.reverseGeocodeLocation(location)
-            {//completionHandler
+            {
                 (placemarks, error) -> Void in
-                
                 let placeArray = placemarks as [CLPlacemark]!
-                
-                //var placeMark: CLPlacemark!
                 let placeMark = placeArray[0]
-                
-                // Address dictionary
-                //print(placeMark.addressDictionary)
-                
-                if let locationName = placeMark.addressDictionary?["Name"] as? String{
-                    print(locationName)
-                }
-
-                if let street = placeMark.addressDictionary?["Thoroughfare"] as? String{
-                    print(street)
-                }
-
-                if let city = placeMark.addressDictionary?["City"] as? String{
-                    returnValue = city
-                    print(city)
-                }
-
-                if let zip = placeMark.addressDictionary?["ZIP"] as? String{
-                    print(zip)
-                }
-
-                if let country = placeMark.addressDictionary?["Country"] as? String{
-                    print(country)
-                }
+                completion(answer: self.displayLocaitonInfo(placeMark))
         }
-        return returnValue
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

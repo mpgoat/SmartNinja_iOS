@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1192E84A1BE6BD0300062D63 /* imageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1192E8491BE6BD0300062D63 /* imageViewController.swift */; };
 		11B26B521BDD355700DD8953 /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B26B511BDD355700DD8953 /* TaskManager.swift */; };
 		11B26B541BDE436300DD8953 /* TaskManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B26B531BDE436300DD8953 /* TaskManagerExtensions.swift */; };
 		11D47E3C1BD7D51F009C63A3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D47E3B1BD7D51F009C63A3 /* AppDelegate.swift */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1192E8491BE6BD0300062D63 /* imageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = imageViewController.swift; path = ../imageViewController.swift; sourceTree = "<group>"; };
 		11B26B511BDD355700DD8953 /* TaskManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
 		11B26B531BDE436300DD8953 /* TaskManagerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskManagerExtensions.swift; sourceTree = "<group>"; };
 		11D47E381BD7D51F009C63A3 /* DN2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DN2.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,6 +105,7 @@
 		11D47E3A1BD7D51F009C63A3 /* DN2 */ = {
 			isa = PBXGroup;
 			children = (
+				1192E8491BE6BD0300062D63 /* imageViewController.swift */,
 				11D47E691BD7D8A2009C63A3 /* Task.swift */,
 				11B26B511BDD355700DD8953 /* TaskManager.swift */,
 				11D47E3B1BD7D51F009C63A3 /* AppDelegate.swift */,
@@ -267,6 +270,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1192E84A1BE6BD0300062D63 /* imageViewController.swift in Sources */,
 				11B26B541BDE436300DD8953 /* TaskManagerExtensions.swift in Sources */,
 				11D47E6A1BD7D8A2009C63A3 /* Task.swift in Sources */,
 				11D47E3E1BD7D51F009C63A3 /* ViewController.swift in Sources */,

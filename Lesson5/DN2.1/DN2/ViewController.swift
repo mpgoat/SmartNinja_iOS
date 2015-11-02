@@ -49,9 +49,8 @@ class ViewController: UIViewController {
     
     @IBAction func addTask(sender: UIButton) {
         if let taskName = taskNameTextField.text, detailsText = detailsTextField.text{
-            
             let detailsTextToEnter = detailsText
-            
+
             if taskName.isEmpty{
                 createAlert("Task Name is Empty!", alertMessage: "Please enter a Task name", action: .okAction)
             }
@@ -61,12 +60,7 @@ class ViewController: UIViewController {
             else{
                 let newTask = Task(taskName: taskName, priority: priority, details: detailsTextToEnter, status: .Started)
                 taskManager.addTask(newTask)
-                
-                //reset input fields
-                prioritySegment.selectedSegmentIndex = 0
-                taskNameTextField.text = ""
-                //update how many tasks are stored
-                updateText()
+                updateDisplay()
             }
         }
     }
@@ -75,7 +69,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         let tapOutsideOfKeyboard: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "DismissKeyboard")
         view.addGestureRecognizer(tapOutsideOfKeyboard)
-        updateText()
+        updateDisplay()
     }
     
     func DismissKeyboard(){
@@ -92,7 +86,7 @@ class ViewController: UIViewController {
         case .areYouSureAction:
             alert.addAction(UIAlertAction(title: "I Am Sure", style: .Default) { _ in
                 self.taskManager.deleteAllTasks()
-                self.updateText()
+                self.updateDisplay()
             })
             
         alert.addAction(UIAlertAction(title: "Cancel", style: .Default) { _ in })
@@ -101,7 +95,9 @@ class ViewController: UIViewController {
         self.presentViewController(alert, animated: true){}
     }
     
-    func updateText(){
+    func updateDisplay(){
+        prioritySegment.selectedSegmentIndex = 0
+        taskNameTextField.text = ""
         showAlerts.text = taskManager.returnNumberOfTasksInQueue()
         showLastTask.text = taskManager.returnLastTaskNameAndDate()
         detailsTextField.text = "Enter Details"

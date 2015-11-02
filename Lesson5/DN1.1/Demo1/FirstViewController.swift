@@ -8,6 +8,11 @@
 
 import UIKit
 
+enum AlertAction{
+    case okAction
+    case areYouSureAction
+}
+
 class FirstViewController: UIViewController, UITextFieldDelegate {
     
     var targetCurrency: Currency = Currency(currencyType: "USD")
@@ -17,7 +22,11 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var convertButton: UIButton!
     @IBOutlet weak var showConvertedResult: UILabel!
     @IBOutlet weak var changedTargetCurrency: UILabel!
+    //lokacija:
+    @IBOutlet weak var streetLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var countryLabel: UILabel!
+
     
     @IBOutlet weak var toUsdButton: UIButton!
     @IBOutlet weak var toCadButton: UIButton!
@@ -26,21 +35,36 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
     @IBAction func getLocation(sender: UIButton){
         if let koordinate = location.getCurrentLocation(){
             print(koordinate)
-            let mesto = location.getUsersClosestCity(koordinate)
-            cityLabel.text = mesto
-            print("mesta ne dobim pravocasno: \(mesto)")
             
-            switch mesto{
+            location.getUsersClosestCity(koordinate) {
+                (locationInfo: [String]) in
+                print("locInfo:\(locationInfo)")
+                
+                //print("moje mesto je asinhrono: \(mesto)")
+                
+                self.streetLabel.text = locationInfo[0]
+                self.cityLabel.text = locationInfo[2]
+                self.countryLabel.text = locationInfo[4]
+                
+                switch locationInfo[2]{
                 case "Ljubljana":
-                    targetCurrency = Currency(currencyType: "EUR")
+                    self.targetCurrency = Currency(currencyType: "EUR")
+                    self.createAlert("You are already using EUR! in Ljubljana!", alertMessage: "You can exit app safely.", action: .okAction)
                 case "London":
-                    targetCurrency = Currency(currencyType: "GBP")
+                    self.targetCurrency = Currency(currencyType: "GBP")
                 case "Tokyo":
-                    targetCurrency = Currency(currencyType: "JPY")
+                    self.targetCurrency = Currency(currencyType: "JPY")
+                    self.toUsdButton.selected = false
+                    self.toCadButton.selected = false
+                    self.toJpyButton.selected = true
                 case "Moscow":
-                    targetCurrency = Currency(currencyType: "RUB")
+                    self.targetCurrency = Currency(currencyType: "RUB")
                 default:
-                    targetCurrency = Currency(currencyType: "USD")
+                    self.targetCurrency = Currency(currencyType: "USD")
+                    self.toUsdButton.selected = true
+                    self.toCadButton.selected = false
+                    self.toJpyButton.selected = false
+                }
             }
         }
     }
@@ -100,6 +124,20 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
     
     func DismissKeyboard(){
         view.endEditing(true)
+    }
+    
+    func createAlert(alertTitle: String, alertMessage: String, action: AlertAction){
+        let alert = UIAlertController(title: alertTitle, message:alertMessage, preferredStyle: .Alert)
+        
+        switch action{
+        case .okAction:
+            alert.addAction(UIAlertAction(title: "Yes master.", style: .Default) { _ in })
+        case .areYouSureAction:
+            alert.addAction(UIAlertAction(title: "I Am Sure", style: .Default) { _ in })
+            alert.addAction(UIAlertAction(title: "Cancel", style: .Default) { _ in })
+        }
+        
+        self.presentViewController(alert, animated: true){}
     }
 }
 

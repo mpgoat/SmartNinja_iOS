@@ -80,8 +80,29 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Street" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NWo-k4-nmS">
+                                <rect key="frame" x="0.0" y="180" width="147" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="City" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BBt-Ta-gYe">
+                                <rect key="frame" x="0.0" y="209" width="147" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Country" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RRw-zW-i3N">
+                                <rect key="frame" x="0.0" y="238" width="147" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R6Q-jG-raB">
-                                <rect key="frame" x="20" y="116" width="62" height="56"/>
+                                <rect key="frame" x="42" y="116" width="62" height="56"/>
                                 <animations/>
                                 <size key="titleShadowOffset" width="2.2250738585072014e-308" height="0.0"/>
                                 <state key="normal" image="locationButton.png"/>
@@ -89,13 +110,6 @@
                                     <action selector="getLocation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WgE-3G-lwa"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="City" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NWo-k4-nmS">
-                                <rect key="frame" x="36" y="180" width="31" height="21"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -125,10 +139,12 @@
                     </view>
                     <connections>
                         <outlet property="changedTargetCurrency" destination="hXT-h7-5Z6" id="dfq-sY-BrF"/>
-                        <outlet property="cityLabel" destination="NWo-k4-nmS" id="py6-is-weF"/>
+                        <outlet property="cityLabel" destination="BBt-Ta-gYe" id="NfB-dC-NvP"/>
                         <outlet property="convertButton" destination="pox-SF-Hqg" id="wgE-gN-S00"/>
+                        <outlet property="countryLabel" destination="RRw-zW-i3N" id="WQ2-Rv-WJT"/>
                         <outlet property="currencyInputTextField" destination="15W-34-08I" id="512-bg-Qex"/>
                         <outlet property="showConvertedResult" destination="Nnl-W7-0Xa" id="is9-kE-A4a"/>
+                        <outlet property="streetLabel" destination="NWo-k4-nmS" id="kkc-dN-QYa"/>
                         <outlet property="toCadButton" destination="vkb-79-vkD" id="Nth-mA-oeg"/>
                         <outlet property="toJpyButton" destination="aEA-b9-s29" id="xub-Bo-vO4"/>
                         <outlet property="toUsdButton" destination="hoj-2o-oxj" id="v11-O6-EzB"/>
