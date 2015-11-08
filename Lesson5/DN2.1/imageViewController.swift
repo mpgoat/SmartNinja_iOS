@@ -8,11 +8,52 @@
 
 import UIKit
 
-class imageViewController: UIViewController{
+protocol SelectedImageDelegate {
+    func selectedImage(image : UIImage)
+}
+
+class ImagePickerViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    
+    var delegate : SelectedImageDelegate?
+    let imagePicker = UIImagePickerController()
+    
+    @IBOutlet weak var selectedImageView: UIImageView!
+    @IBOutlet weak var imageSize: UILabel!
+    @IBAction func selectImage(sender: UIButton) {
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .PhotoLibrary
+        presentViewController(imagePicker, animated: true, completion: nil)
+        
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            selectedImageView.contentMode = .ScaleAspectFit
+            selectedImageView.image = pickedImage
+            imageSize.text = String(selectedImageView.image!.size.width) + " by " + String(selectedImageView.image!.size.height)
+            
+        }
+        
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addTapped")
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add", style: .Plain, target: self, action: "addTapped")
+        imagePicker.delegate = self
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .Done, target: self, action: "doneAction")
+    }
+    
+    func doneAction(){
+        if let delegateNeki = delegate {
+            if let image = selectedImageView.image {
+                delegateNeki.selectedImage(image)
+            }
+        }
+        navigationController?.popViewControllerAnimated(true)
     }
 }

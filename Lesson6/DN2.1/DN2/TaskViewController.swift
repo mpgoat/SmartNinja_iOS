@@ -12,17 +12,23 @@ enum AlertAction{
     case okAction
     case areYouSureAction
 }
-
-class ViewController: UIViewController {
+//
+class TaskViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     let taskManager = TaskManager.sharedInstance
     var priority = Priority(rawValue: "Normal")!
-
+    let imagePicker = UIImagePickerController()
+    
     @IBOutlet weak var taskNameTextField: UITextField!
     @IBOutlet weak var showAlerts: UILabel!
     @IBOutlet weak var detailsTextField: UITextField!
     @IBOutlet weak var showLastTask: UILabel!
     @IBOutlet weak var prioritySegment: UISegmentedControl!
+    @IBAction func selctImage(sender: UIButton) {
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .PhotoLibrary
+        presentViewController(imagePicker, animated: true, completion: nil)
+    }
     
     @IBAction func selectPrioritySegment(sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex{
@@ -65,8 +71,15 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var taskImageView: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //image picker delegate
+        imagePicker.delegate = self
+        
+        //gesture recogniser for keyboard dismissal
         let tapOutsideOfKeyboard: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "DismissKeyboard")
         view.addGestureRecognizer(tapOutsideOfKeyboard)
         updateDisplay()
@@ -101,7 +114,20 @@ class ViewController: UIViewController {
         showAlerts.text = taskManager.returnNumberOfTasksInQueue()
         showLastTask.text = taskManager.returnLastTaskNameAndDate()
         detailsTextField.text = "Enter Details"
+        taskImageView.image = nil
     }
-
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            taskImageView.contentMode = .ScaleAspectFit
+            taskImageView.image = pickedImage
+            print("success!")
+        }
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
 }
 

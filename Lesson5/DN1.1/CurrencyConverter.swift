@@ -37,6 +37,8 @@ class CurrencyConverter{
                 return 1.5615
             case "JPY":
                 return 135.5695
+            case "RUB":
+                return 68.7006
             default:
                 return nil
             }
@@ -54,6 +56,8 @@ class CurrencyConverter{
                 return 1.3759
             case "JPY":
                 return 119.4550
+            case "RUB":
+                return 63.4495
             default:
                 return nil
             }

@@ -21,6 +21,8 @@ class Location : NSObject, CLLocationManagerDelegate {
     
     func displayLocaitonInfo(placeMark: CLPlacemark) -> [String]{
         var output = [String]()
+    
+        
         if let locationName = placeMark.addressDictionary?["Name"] as? String{
             output.append(locationName)
         }
@@ -38,6 +40,10 @@ class Location : NSObject, CLLocationManagerDelegate {
         
         if let country = placeMark.addressDictionary?["Country"] as? String{
             output.append(country)
+        }
+        
+        if let isoCountryCode = placeMark.ISOcountryCode{
+            output.append(isoCountryCode)
         }
         return output
     }

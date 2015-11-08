@@ -16,7 +16,7 @@ enum AlertAction{
 class FirstViewController: UIViewController, UITextFieldDelegate {
     
     var targetCurrency: Currency = Currency(currencyType: "USD")
-    var location : Location!
+    lazy var location = Location()
     
     @IBOutlet weak var currencyInputTextField: UITextField!
     @IBOutlet weak var convertButton: UIButton!
@@ -113,7 +113,6 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        location = Location()
         
         currencyInputTextField.delegate = self
         currencyInputTextField.keyboardType = .DecimalPad
