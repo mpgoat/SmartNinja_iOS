@@ -8,19 +8,6 @@
 
 import UIKit
 
-/*
-    "clear-day"
-    "clear-night"
-    "partly-cloudy-day"
-    "partly-cloudy-night"
-    "cloudy"
-    "rain"
-    "sleet"
-    "snow"
-    "wind"
-    "fog"
-*/
-
 class WeatherViewController: UIViewController {
     
     lazy var weather = Weather()
@@ -99,9 +86,6 @@ class WeatherViewController: UIViewController {
         locationLabel.text = ""
         weatherLabel.text = ""
         temperatureLabel.text = ""
-        //iconWebView.backgroundColor = UIColor.clearColor()
-        //self.view.backgroundColor = UIColor.brownColor()
-        
     }
 }
 

@@ -69,7 +69,7 @@ class Location : NSObject, CLLocationManagerDelegate {
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print (locations.first) // ko se lokacija updejta se poslje delegate, sicer ne.
+        print (locations.first)
         print("Updated Location")
     }
     

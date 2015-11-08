@@ -13,11 +13,6 @@ class Weather{
 
     private func returnCurrentWeather(data: JSON) -> JSON{
         return data
-        /*
-        let temp = data["temperature"].double
-        let celsius = Int((temp! - 32) / 1.8)
-        return("\(celsius)")
-        */
     }
     
     func getWeatherforLocation(location: CLLocation, completion: (currentConditions: JSON) -> Void) -> NSURLSessionTask?{
