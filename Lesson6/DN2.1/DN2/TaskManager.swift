@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class TaskManager{
     
@@ -51,14 +52,15 @@ class TaskManager{
     }
     */
     
-    func returnLastTaskNameAndDate() -> String {
+    func returnLastTaskNameAndDate() -> NSAttributedString {
         if let lastTask = tasks.last{
             let formatter = NSDateFormatter() //imej le eno instanco ker je ful pocasna!!!
             formatter.dateStyle = NSDateFormatterStyle.ShortStyle
             formatter.timeStyle = NSDateFormatterStyle.ShortStyle
-            return "Task \(lastTask.taskName) created \(formatter.stringFromDate(lastTask.dateOfCreation))."
-        }
-        return "Task List is empty"
+            // status in prioriteta = nil za shranjene podatke!!!!!!!
+            return NSAttributedString(string: "Ime: \(lastTask.taskName) created \(formatter.stringFromDate(lastTask.dateOfCreation))\nPrioriteta: \(lastTask.priority) \nOpis: \(lastTask.details) \nStatus: \(lastTask.status) \nCreated: \(lastTask.dateOfCreation) \nChanged: \(lastTask.dateOfLastChange)", attributes: [NSFontAttributeName: UIFont.boldSystemFontOfSize(14)])
+            }
+        return NSAttributedString(string: "Task List is empty", attributes: [NSFontAttributeName: UIFont.boldSystemFontOfSize(14)])
     }
     
     func returnNumberOfTasksInQueue() -> String {

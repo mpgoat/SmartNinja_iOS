@@ -112,7 +112,7 @@ class TaskViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         prioritySegment.selectedSegmentIndex = 0
         taskNameTextField.text = ""
         showAlerts.text = taskManager.returnNumberOfTasksInQueue()
-        showLastTask.text = taskManager.returnLastTaskNameAndDate()
+        showLastTask.attributedText = taskManager.returnLastTaskNameAndDate()
         detailsTextField.text = "Enter Details"
         taskImageView.image = nil
     }
