@@ -17,6 +17,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Ljubljana2" translatesAutoresizingMaskIntoConstraints="NO" id="BuR-CD-VlU">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <animations/>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ucV-Eq-sTy">
                                 <rect key="frame" x="227" y="263" width="147" height="42"/>
                                 <animations/>
@@ -39,6 +43,9 @@
                                 <rect key="frame" x="352" y="60" width="172" height="75"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="75" id="1sf-WD-OiS"/>
+                                </constraints>
                                 <dataDetectorType key="dataDetectorTypes"/>
                             </webView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Conditions" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Zd-rn-dpr">
@@ -55,10 +62,6 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" alpha="0.0" tag="1" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Ljubljana2" translatesAutoresizingMaskIntoConstraints="NO" id="BuR-CD-VlU">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <animations/>
-                            </imageView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -67,18 +70,17 @@
                             <constraint firstItem="EFD-Wo-XIM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="59a-XD-6dx"/>
                             <constraint firstItem="2Zd-rn-dpr" firstAttribute="centerX" secondItem="EFD-Wo-XIM" secondAttribute="centerX" id="CgM-CM-ykH"/>
                             <constraint firstItem="2Zd-rn-dpr" firstAttribute="top" secondItem="EFD-Wo-XIM" secondAttribute="bottom" constant="21" id="Jo8-KK-z9Q"/>
+                            <constraint firstItem="FmP-si-C0E" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="40" id="KPc-5i-hSN"/>
                             <constraint firstItem="NW3-AC-R8B" firstAttribute="top" secondItem="2Zd-rn-dpr" secondAttribute="bottom" constant="28" id="LF8-1S-Pzu"/>
                             <constraint firstItem="BuR-CD-VlU" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="QLq-np-VZx"/>
+                            <constraint firstItem="ucV-Eq-sTy" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Wdo-ZM-6iM"/>
                             <constraint firstItem="BuR-CD-VlU" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="XKT-kM-QT2"/>
                             <constraint firstItem="BuR-CD-VlU" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Zm0-GN-lZT"/>
                             <constraint firstItem="ucV-Eq-sTy" firstAttribute="centerX" secondItem="NW3-AC-R8B" secondAttribute="centerX" id="aFY-8n-0yU"/>
-                            <constraint firstItem="FmP-si-C0E" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="40" id="aQC-vW-M09"/>
+                            <constraint firstItem="ucV-Eq-sTy" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="243" id="b6z-1j-ghv"/>
                             <constraint firstAttribute="trailingMargin" secondItem="FmP-si-C0E" secondAttribute="trailing" constant="56" id="eKS-Iy-mEh"/>
-                            <constraint firstItem="BuR-CD-VlU" firstAttribute="top" secondItem="FmP-si-C0E" secondAttribute="bottom" constant="-135" id="ixW-NX-c4U"/>
-                            <constraint firstItem="BuR-CD-VlU" firstAttribute="top" secondItem="ucV-Eq-sTy" secondAttribute="bottom" constant="-305" id="kjf-dT-Um3"/>
                             <constraint firstItem="FmP-si-C0E" firstAttribute="leading" secondItem="EFD-Wo-XIM" secondAttribute="trailing" constant="6" id="pCO-R1-gNp"/>
                             <constraint firstItem="BuR-CD-VlU" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="pld-cC-b1I"/>
-                            <constraint firstItem="ucV-Eq-sTy" firstAttribute="top" secondItem="NW3-AC-R8B" secondAttribute="bottom" constant="44" id="r6K-kG-qVZ"/>
                             <constraint firstItem="EFD-Wo-XIM" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="54" id="urR-Mc-UXv"/>
                         </constraints>
                     </view>
