@@ -20,7 +20,8 @@
 		11D1FAD91BF26D1400FC6048 /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D1FAD51BF26D1400FC6048 /* TaskViewController.swift */; };
 		11D1FADB1BF26D2F00FC6048 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11D1FADA1BF26D2F00FC6048 /* Main.storyboard */; };
 		11D1FAE91BF296BC00FC6048 /* CDTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D1FAE81BF296BC00FC6048 /* CDTask.swift */; };
-		11D1FAEB1BF39C6A00FC6048 /* taskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D1FAEA1BF39C6A00FC6048 /* taskTableViewCell.swift */; };
+		11D1FAEB1BF39C6A00FC6048 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D1FAEA1BF39C6A00FC6048 /* TaskTableViewCell.swift */; };
+		11D1FAED1BF3A6E300FC6048 /* TaskDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D1FAEC1BF3A6E300FC6048 /* TaskDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,7 +61,8 @@
 		11D1FADA1BF26D2F00FC6048 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		11D1FADC1BF26D4F00FC6048 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		11D1FAE81BF296BC00FC6048 /* CDTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CDTask.swift; sourceTree = "<group>"; };
-		11D1FAEA1BF39C6A00FC6048 /* taskTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = taskTableViewCell.swift; sourceTree = "<group>"; };
+		11D1FAEA1BF39C6A00FC6048 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
+		11D1FAEC1BF3A6E300FC6048 /* TaskDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,7 +121,8 @@
 				11D1FAD51BF26D1400FC6048 /* TaskViewController.swift */,
 				11D1FA9F1BF26CF900FC6048 /* AppDelegate.swift */,
 				11D1FADA1BF26D2F00FC6048 /* Main.storyboard */,
-				11D1FAEA1BF39C6A00FC6048 /* taskTableViewCell.swift */,
+				11D1FAEC1BF3A6E300FC6048 /* TaskDetailViewController.swift */,
+				11D1FAEA1BF39C6A00FC6048 /* TaskTableViewCell.swift */,
 				11D1FAAB1BF26CF900FC6048 /* LaunchScreen.storyboard */,
 				11D1FAA61BF26CF900FC6048 /* TaskManager.xcdatamodeld */,
 				11D1FADC1BF26D4F00FC6048 /* Info.plist */,
@@ -284,9 +287,10 @@
 				11D1FAE91BF296BC00FC6048 /* CDTask.swift in Sources */,
 				11D1FAD11BF26D0400FC6048 /* Task.swift in Sources */,
 				11D1FAA81BF26CF900FC6048 /* TaskManager.xcdatamodeld in Sources */,
+				11D1FAED1BF3A6E300FC6048 /* TaskDetailViewController.swift in Sources */,
 				11D1FAD61BF26D1400FC6048 /* TaskManager.swift in Sources */,
 				11D1FAD91BF26D1400FC6048 /* TaskViewController.swift in Sources */,
-				11D1FAEB1BF39C6A00FC6048 /* taskTableViewCell.swift in Sources */,
+				11D1FAEB1BF39C6A00FC6048 /* TaskTableViewCell.swift in Sources */,
 				11D1FAD81BF26D1400FC6048 /* TaskTableViewController.swift in Sources */,
 				11D1FAA01BF26CF900FC6048 /* AppDelegate.swift in Sources */,
 			);

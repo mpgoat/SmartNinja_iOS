@@ -15,7 +15,7 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
     
     var context: NSManagedObjectContext!
     
-    @IBOutlet weak var tableView: UITableView!
+    //@IBOutlet weak var tableView: UITableView!
 
     lazy var fetchedResultsController: NSFetchedResultsController = {
         let tasksFetchRequest = NSFetchRequest(entityName: "Tasks")
@@ -32,17 +32,33 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
         
         return frc
     }()
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "taskAddedHandler:", name: "taskAdded", object: nil)
+        //
         
         do {
             try fetchedResultsController.performFetch()
         } catch {
             print("An error occurred")
         }
+
     }
+    
+    func taskAddedHandler(notification: NSNotification){
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            do {
+                try self.fetchedResultsController.performFetch()
+            } catch {
+                print("An error occurred")
+            }
+            self.taskTableView.reloadData()
+        })
+        
+    }
+
     
     // MARK: TableView Data Source
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -59,6 +75,8 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
         print("called tableView1")
         if let sections = fetchedResultsController.sections {
             let currentSection = sections[section]
+            //vsak task je svoj section
+            print(currentSection.numberOfObjects)
             return currentSection.numberOfObjects
         }
         
@@ -66,18 +84,16 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        print("called tableView2")
-        let cell: taskTableViewCell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! taskTableViewCell
         
-        print("printam frc")
-        print(fetchedResultsController.objectAtIndexPath(indexPath))
-        if let task = fetchedResultsController.objectAtIndexPath(indexPath) as? NSManagedObject, taskAsTask = task.valueForKey("task") as? Task{ //Zakaj moram tukaj to uporabit?
-            cell.taskNameLabel.text = taskAsTask.taskName
-            cell.taskDetailsLabel.text = taskAsTask.details
-            cell.taskPriorityLabel.text = taskAsTask.priority?.rawValue
-            print(taskAsTask.taskName)
-            //cell.textLabel?.text = taskAsTask.taskName
-            //cell.detailTextLabel?.text = taskAsTask.details
+        var taskImage: UIImage? = nil
+        let cell: TaskTableViewCell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! TaskTableViewCell
+        
+        if let managedTask = fetchedResultsController.objectAtIndexPath(indexPath) as? NSManagedObject,
+            let task = managedTask.valueForKey("task") as? Task{ //Zakaj moram tukaj to uporabit?
+                if let image = managedTask.valueForKey("taskImage") as? UIImage{
+                    taskImage = image
+                }
+                cell.setCell(task.taskName, taskDetails: task.details, taskPriority: task.priority!, taskImage: taskImage)
         }
         
         return cell
@@ -90,5 +106,21 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
         }
         
         return nil
+    }
+
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.Delete{
+            //zbrisi iz coredata
+        }
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let taskDetailViewController = self.storyboard?.instantiateViewControllerWithIdentifier("taskDetail") as! TaskDetailViewController
+        
+        taskDetailViewController.taskName = "test"
+        taskDetailViewController.taskDetails = "detajli"
+        
+        self.presentViewController(taskDetailViewController, animated: true, completion: nil)
     }
 }

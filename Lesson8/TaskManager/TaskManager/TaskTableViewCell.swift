@@ -8,7 +8,7 @@
 
 import UIKit
 
-class taskTableViewCell: UITableViewCell {
+class TaskTableViewCell: UITableViewCell {
 
     @IBOutlet weak var taskNameLabel: UILabel!
     @IBOutlet weak var taskDetailsLabel: UILabel!
@@ -24,6 +24,12 @@ class taskTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func setCell(taskName: String, taskDetails: String, taskPriority: Priority, taskImage: UIImage?){
+        self.taskNameLabel.text = taskName
+        self.taskDetailsLabel.text = taskDetails
+        self.taskPriorityLabel.text = taskPriority.rawValue
     }
 
 }

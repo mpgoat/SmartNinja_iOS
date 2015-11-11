@@ -146,6 +146,30 @@ class TaskManager{
     func returnNumberOfTasksInQueue() -> String {
         return "Currently there are \(tasks.count) tasks in queue"
     }
+    /* ni koncano!!
+    func returnAllTasks() -> ([NSManagedObject], UIImage?){
+
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
+        
+        let taskFetchRequest = NSFetchRequest(entityName: "Tasks")
+        let imageFetchRequest = NSFetchRequest(entityName: "taskImage")
+        
+        do {
+            var taskResults = try managedContext.executeFetchRequest(taskFetchRequest)
+            var imageResult = try managedContext.executeFetchRequest(imageFetchRequest)
+            taskResults = taskResults as! [NSManagedObject]
+            imageResult = imageResult as! [NSManagedObject]
+            
+            return(taskResults, imageResult) //popravi!
+            
+            
+            
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+    }
+*/
     /*
     func saveDataToStorage() {
         let savedData = NSKeyedArchiver.archivedDataWithRootObject(tasks)

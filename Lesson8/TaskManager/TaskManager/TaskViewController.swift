@@ -86,7 +86,7 @@ class TaskViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         //image picker delegate
         imagePicker.delegate = self
         
@@ -144,5 +144,6 @@ class TaskViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         dismissViewControllerAnimated(true, completion: nil)
     }
+    
 }
 
