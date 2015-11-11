@@ -95,6 +95,16 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
         return 0
     }
     
+    func prepareImageForPresentation(data: NSData) -> UIImage?{
+        guard let image = UIImage(data: data)
+            else {
+                print("image conversion error")
+                return nil
+        }
+        return image
+    }
+
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var taskImage: UIImage? = nil
@@ -102,8 +112,9 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
         
         if let managedTask = fetchedResultsController.objectAtIndexPath(indexPath) as? NSManagedObject,
             let task = managedTask.valueForKey("task") as? Task{ //Zakaj moram tukaj to uporabit?
-                if let image = managedTask.valueForKey("taskImage") as? UIImage{
-                    taskImage = image
+                if let image = managedTask.valueForKey("taskImage") as? NSData{
+                    print("yolooo")
+                    taskImage = prepareImageForPresentation(image)
                 }
                 cell.setCell(task.taskName, taskDetails: task.details, taskPriority: task.priority!, taskImage: taskImage)
         }
@@ -126,19 +137,17 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
 
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == UITableViewCellEditingStyle.Delete{
-            print("delete lalala")
             if let managedTask = fetchedResultsController.objectAtIndexPath(indexPath) as? NSManagedObject{
-                    context.deleteObject(managedTask)
+                context.deleteObject(managedTask)
+                do {
+                    print("sejvaaam")
+                    try self.context.save()
+                    NSNotificationCenter.defaultCenter().postNotificationName("taskDeleted", object: nil)
+                } catch {
+                    print("An error WHILE SAVING")
                 }
-
-            do {
-                print("sejvaaam")
-                try self.context.save()
-                NSNotificationCenter.defaultCenter().postNotificationName("taskDeleted", object: nil)
-            } catch {
-                print("An error WHILE SAVING")
+                self.taskTableView.reloadData()
             }
-            self.taskTableView.reloadData()
         }
     }
     

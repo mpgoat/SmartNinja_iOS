@@ -30,6 +30,7 @@ class TaskTableViewCell: UITableViewCell {
         self.taskNameLabel.text = taskName
         self.taskDetailsLabel.text = taskDetails
         self.taskPriorityLabel.text = taskPriority.rawValue
+        self.taskImageView.image = taskImage
     }
 
 }
