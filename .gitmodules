@@ -1,0 +1,3 @@
+[submodule "Lesson8/CoreDataDemo/CoreDataDemo/Alamofire"]
+	path = Lesson8/CoreDataDemo/CoreDataDemo/Alamofire
+	url = https://github.com/Alamofire/Alamofire.git

@@ -15,7 +15,7 @@ class Weather{
         return data
     }
     
-    func getWeatherforLocation(location: CLLocation, completion: (currentConditions: JSON) -> Void) -> NSURLSessionTask?{
+    func getWeatherforLocation(location: CLLocation, completion: (currentConditions: JSON) -> Void) -> NSURLSessionTask?{ //clojure
         let apiKey = "ad1249e2a18603219a34df7fccd28011"
         if let weatherUrl = NSURL(string: "https://api.forecast.io/forecast/\(apiKey)/\(location.coordinate.latitude),\(location.coordinate.longitude)"){
 
