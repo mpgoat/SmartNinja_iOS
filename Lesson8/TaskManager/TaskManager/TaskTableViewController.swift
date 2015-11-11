@@ -11,6 +11,8 @@ import CoreData
 
 class TaskTableViewController:  UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
     
+    @IBOutlet weak var taskTableView: UITableView!
+    
     var context: NSManagedObjectContext!
     
     @IBOutlet weak var tableView: UITableView!
@@ -65,14 +67,17 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         print("called tableView2")
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-        //tukaj zmeraj faila cast. Zakaj?
+        let cell: taskTableViewCell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! taskTableViewCell
+        
         print("printam frc")
         print(fetchedResultsController.objectAtIndexPath(indexPath))
-        if let task = fetchedResultsController.objectAtIndexPath(indexPath) as? Task{
-            cell.textLabel?.text = task.taskName
-            print(task.taskName)
-            cell.detailTextLabel?.text = task.details
+        if let task = fetchedResultsController.objectAtIndexPath(indexPath) as? NSManagedObject, taskAsTask = task.valueForKey("task") as? Task{ //Zakaj moram tukaj to uporabit?
+            cell.taskNameLabel.text = taskAsTask.taskName
+            cell.taskDetailsLabel.text = taskAsTask.details
+            cell.taskPriorityLabel.text = taskAsTask.priority?.rawValue
+            print(taskAsTask.taskName)
+            //cell.textLabel?.text = taskAsTask.taskName
+            //cell.detailTextLabel?.text = taskAsTask.details
         }
         
         return cell
