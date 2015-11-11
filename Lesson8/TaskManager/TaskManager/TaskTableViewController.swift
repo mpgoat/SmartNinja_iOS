@@ -37,8 +37,8 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "taskAddedHandler:", name: "taskAdded", object: nil)
-        //
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "taskDeletedHandler:", name: "taskDeleted", object: nil)
+
         do {
             try fetchedResultsController.performFetch()
         } catch {
@@ -48,6 +48,18 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
     }
     
     func taskAddedHandler(notification: NSNotification){
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            do {
+                try self.fetchedResultsController.performFetch()
+            } catch {
+                print("An error occurred")
+            }
+            self.taskTableView.reloadData()
+        })
+        
+    }
+    
+    func taskDeletedHandler(notification: NSNotification){
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             do {
                 try self.fetchedResultsController.performFetch()
@@ -107,10 +119,26 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
         
         return nil
     }
+    
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool{
+        return true
+    }
 
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == UITableViewCellEditingStyle.Delete{
-            //zbrisi iz coredata
+            print("delete lalala")
+            if let managedTask = fetchedResultsController.objectAtIndexPath(indexPath) as? NSManagedObject{
+                    context.deleteObject(managedTask)
+                }
+
+            do {
+                print("sejvaaam")
+                try self.context.save()
+                NSNotificationCenter.defaultCenter().postNotificationName("taskDeleted", object: nil)
+            } catch {
+                print("An error WHILE SAVING")
+            }
+            self.taskTableView.reloadData()
         }
     }
     
