@@ -14,14 +14,17 @@ class TaskDetailViewController: UIViewController {
     @IBOutlet weak var taskNameLabel: UILabel!
     @IBOutlet weak var taskPriorityLabel: UILabel!
     @IBOutlet weak var taskDateLabel: UILabel!
+    
     var taskName: String?
     var taskDetails: String?
     var taskPriority: String?
     var taskDate: String?
+    var taskImage: UIImage?
     
     @IBOutlet weak var taskDetailsLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.taskDetailImageView.image = taskImage
         self.taskNameLabel.text = taskName
         self.taskDetailsLabel.text = taskDetails
         self.taskPriorityLabel.text = taskPriority

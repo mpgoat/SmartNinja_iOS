@@ -19,18 +19,20 @@ class TaskTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
+/*
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
-    
+    */
     func setCell(taskName: String, taskDetails: String, taskPriority: Priority, taskImage: UIImage?){
         self.taskNameLabel.text = taskName
         self.taskDetailsLabel.text = taskDetails
         self.taskPriorityLabel.text = taskPriority.rawValue
         self.taskImageView.image = taskImage
+        self.selectionStyle = .None
+        //self.setSelected(true, animated: true)
     }
 
 }

@@ -14,8 +14,8 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
     @IBOutlet weak var taskTableView: UITableView!
     
     var context: NSManagedObjectContext!
-    
-    //@IBOutlet weak var tableView: UITableView!
+    var cachedTask: Task?
+    var cachedImage: UIImage?
 
     lazy var fetchedResultsController: NSFetchedResultsController = {
         let tasksFetchRequest = NSFetchRequest(entityName: "Tasks")
@@ -36,6 +36,9 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if traitCollection.forceTouchCapability == .Available{
+            registerForPreviewingWithDelegate(self, sourceView: taskTableView)
+        }
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "taskAddedHandler:", name: "taskAdded", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "taskDeletedHandler:", name: "taskDeleted", object: nil)
 
@@ -48,14 +51,16 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
     }
     
     func taskAddedHandler(notification: NSNotification){
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        dispatch_async(GlobalUserInteractiveQueue){
             do {
                 try self.fetchedResultsController.performFetch()
             } catch {
                 print("An error occurred")
             }
-            self.taskTableView.reloadData()
-        })
+
+                self.taskTableView.reloadData()
+
+        }
         
     }
     
@@ -76,7 +81,6 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         print("called numberOfSectionsInTableView")
         if let sections = fetchedResultsController.sections {
-            print(sections.count)
             return sections.count
         }
         
@@ -87,8 +91,6 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
         print("called tableView1")
         if let sections = fetchedResultsController.sections {
             let currentSection = sections[section]
-            //vsak task je svoj section
-            print(currentSection.numberOfObjects)
             return currentSection.numberOfObjects
         }
         
@@ -111,17 +113,18 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
         let cell: TaskTableViewCell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! TaskTableViewCell
         
         if let managedTask = fetchedResultsController.objectAtIndexPath(indexPath) as? NSManagedObject,
-            let task = managedTask.valueForKey("task") as? Task{ //Zakaj moram tukaj to uporabit?
-                if let image = managedTask.valueForKey("taskImage") as? NSData{
-                    print("yolooo")
+            let task = managedTask.valueForKey("task") as? Task{
+                if let image = managedTask.valueForKey("smallTaskImage") as? NSData{
+                    
                     taskImage = prepareImageForPresentation(image)
+                    print(taskImage?.size)
                 }
                 cell.setCell(task.taskName, taskDetails: task.details, taskPriority: task.priority!, taskImage: taskImage)
         }
         
         return cell
     }
-    
+    /*
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if let sections = fetchedResultsController.sections {
             let currentSection = sections[section]
@@ -130,7 +133,7 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
         
         return nil
     }
-    
+    */
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool{
         return true
     }
@@ -140,7 +143,6 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
             if let managedTask = fetchedResultsController.objectAtIndexPath(indexPath) as? NSManagedObject{
                 context.deleteObject(managedTask)
                 do {
-                    print("sejvaaam")
                     try self.context.save()
                     NSNotificationCenter.defaultCenter().postNotificationName("taskDeleted", object: nil)
                 } catch {
@@ -150,9 +152,18 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
             }
         }
     }
-    
+    /*
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showTaskDetail"{
+            //if let destinationVC = segue.destinationViewController as? TaskDetailViewController{
+                //destinationVC.taskName =
+            //}
+        }
+    }
+*/
+    /*
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+                }
         let taskDetailViewController = self.storyboard?.instantiateViewControllerWithIdentifier("taskDetail") as! TaskDetailViewController
         
         taskDetailViewController.taskName = "test"
@@ -160,4 +171,5 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
         
         self.presentViewController(taskDetailViewController, animated: true, completion: nil)
     }
+*/
 }

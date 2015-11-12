@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import CoreData
+import ImageIO
 
 class TaskManager{
     
@@ -21,8 +22,14 @@ class TaskManager{
     
     func saveTaskToCoreData(inputTask: Task?, inputImage: UIImage?){
         var imageData: NSData?
+        var smallImageData: NSData?
         if let image = inputImage{
+            //make small version of photo
+            let smallImage = resizeImage(image, newHeight: 300.0)
+            
             imageData = self.prepareImageForSaving(image)
+            smallImageData = self.prepareImageForSaving(smallImage)
+            //print(smallImageData!)
         }
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
@@ -30,16 +37,9 @@ class TaskManager{
         let task = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
         task.setValue(inputTask, forKey: "task")
         task.setValue(imageData, forKey: "taskImage")
-        
-        
-        /*
-        task.setValue(inputTask.taskName, forKey: "taskName")
-        task.setValue(inputTask.details, forKey: "taskDetails")
-        task.setValue(inputTask.priority as? AnyObject, forKey: "taskPriority")
-        task.setValue(inputTask.status as? AnyObject, forKey: "taskStatus")
-        task.setValue(inputTask.dateOfCreation, forKey: "dateOfCreation")
-        task.setValue(inputTask.dateOfLastChange, forKey: "dateOfLastChange")
-        */
+        task.setValue(smallImageData, forKey: "smallTaskImage")
+
+
         do{
             try managedContext.save()
             tasks.append(task)
@@ -82,12 +82,22 @@ class TaskManager{
         return image
     }
     
+    func resizeImage(image: UIImage, newHeight: CGFloat) -> UIImage {
+        let scale = newHeight / image.size.height
+        let newWidth = image.size.width * scale
+        UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight))
+        image.drawInRect(CGRectMake(0, 0, newWidth, newHeight))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage
+    }
+    
     init(){
         self.loadFromCoreData()
     }
     
     func addTask(addedTask: Task, addedImage: UIImage?) {
-        //neki.append(addedTask)
         NSNotificationCenter.defaultCenter().postNotificationName("taskAdded", object: nil)
         saveTaskToCoreData(addedTask, inputImage: addedImage)
     }
@@ -121,7 +131,7 @@ class TaskManager{
     }
     */
     func returnLastImage() -> UIImage?{
-        if let lastImage = tasks.last?.valueForKey("taskImage") as? NSData{
+        if let lastImage = tasks.last?.valueForKey("smallTaskImage") as? NSData{
             return prepareImageForPresentation(lastImage)
         }
         return nil

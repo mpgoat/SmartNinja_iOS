@@ -19,7 +19,7 @@ class TaskViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     let taskManager = TaskManager.sharedInstance
     var priority = Priority(rawValue: "Normal")!
     let imagePicker = UIImagePickerController()
-    //let saveQueue = dispatch_queue_create("saveQueue", DISPATCH_QUEUE_CONCURRENT)
+    let saveQueue = dispatch_queue_create("saveQueue", DISPATCH_QUEUE_CONCURRENT)
     let managedContext = AppDelegate().managedObjectContext
     var taskImage: UIImage? = nil
     
@@ -59,9 +59,7 @@ class TaskViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     @IBAction func addTask(sender: UIButton) {
-        if let taskName = taskNameTextField.text, detailsText = detailsTextField.text{
-            //let detailsTextToEnter = detailsText
-
+        if let taskName = self.taskNameTextField.text, detailsText = self.detailsTextField.text{
             if taskName.isEmpty{
                 createAlert("Task Name is Empty!", alertMessage: "Please enter a Task name", action: .okAction)
             }
@@ -69,28 +67,25 @@ class TaskViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                 createAlert("Details Content is Empty!", alertMessage: "Please enter some details", action: .okAction)
             }
             else{
-                //let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                //let managedContext = appDelegate.managedObjectContext
-                //let newTask = Task(taskName: taskName, priority: priority, details: detailsText, status: .Started, insertIntoManagedObjectContext: managedContext)
-                let newTask = Task(taskName: taskName, priority: priority, details: detailsText, status: .Started, image: taskImage)
-                taskManager.addTask(newTask, addedImage: taskImage)
-                updateDisplay()
+
+                //dispatch_async(GlobalUserInteractiveQueue) {
+                    let newTask = Task(taskName: taskName, priority: self.priority, details: detailsText, status: .Started, image: self.taskImage)
+                    self.taskManager.addTask(newTask, addedImage: self.taskImage)
+                    //dispatch_async(GlobalMainQueue) {
+                        self.updateDisplay()
+                    //}
+                //}
             }
         }
     }
     
     
-    @IBOutlet weak var taskImageView: UIImageView!
     
-    @IBOutlet weak var loadedImageView: UIImageView!
+    @IBOutlet weak var taskImageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        //image picker delegate
         imagePicker.delegate = self
-        
-        //gesture recogniser for keyboard dismissal
         let tapOutsideOfKeyboard: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "DismissKeyboard")
         view.addGestureRecognizer(tapOutsideOfKeyboard)
         updateDisplay()
@@ -120,13 +115,12 @@ class TaskViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     func updateDisplay(){
-        prioritySegment.selectedSegmentIndex = 0
-        taskNameTextField.text = ""
-        showAlerts.text = taskManager.returnNumberOfTasksInQueue()
-        showLastTask.attributedText = taskManager.returnLastTaskNameAndDate()
-        detailsTextField.text = "Enter Details"
-        taskImageView.image = nil
-        loadedImageView.image = taskManager.returnLastImage()
+        self.prioritySegment.selectedSegmentIndex = 0
+        self.taskNameTextField.text = ""
+        self.showAlerts.text = self.taskManager.returnNumberOfTasksInQueue()
+        self.showLastTask.attributedText = self.taskManager.returnLastTaskNameAndDate()
+        self.detailsTextField.text = "Enter Details"
+        self.taskImageView.image = nil
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
@@ -135,7 +129,6 @@ class TaskViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             taskImageView.image = pickedImage
             
             taskImage = pickedImage
-            //loadedImageView.image = taskImage
             print("success!")
         }
         dismissViewControllerAnimated(true, completion: nil)
