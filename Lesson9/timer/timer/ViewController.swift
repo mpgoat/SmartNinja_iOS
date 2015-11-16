@@ -55,6 +55,7 @@ class ViewController: UIViewController {
     }
     
     func startTimer(){
+        timer.invalidate()
         startTimerButton.setTitle("Stop Timer", forState: .Normal)
         cifre = Double(timeTextField.text!)!
         countDownLabel.text = timeTextField.text
@@ -68,34 +69,36 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "appEnteredIntoBackGround", name:UIApplicationDidEnterBackgroundNotification, object: nil)
+        //NSNotificationCenter.defaultCenter().addObserver(self, selector: "appEnteredIntoBackGround", name:UIApplicationDidEnterBackgroundNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "appInterupted", name:UIApplicationWillResignActiveNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "appActiveFromBackground", name:UIApplicationWillEnterForegroundNotification, object: nil)
+        //NSNotificationCenter.defaultCenter().addObserver(self, selector: "appActiveFromBackground", name:UIApplicationWillEnterForegroundNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "appBecameActive", name:UIApplicationDidBecomeActiveNotification, object: nil)
         
         // se klice tudi ko se app zazene
 
         startTimerButton.setTitle("Start Timer", forState: .Normal)
         self.countDownLabel.textColor = UIColor.blackColor()
-    }
+    }/*
     func appEnteredIntoBackGround(){
         print("app in background")
         timer.invalidate() //pause
     }
+*/
     func appInterupted(){
-        
+        print("app interrupted")
         timer.invalidate() //pause
     }
     func appBecameActive(){
         print("app active from interupted")
         self.countDownLabel.textColor = UIColor.blackColor()
         timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "neki", userInfo: "Done", repeats: true)
-    }
+    }/*
     func appActiveFromBackground(){
         print("app active")
         self.countDownLabel.textColor = UIColor.blackColor()
         timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "neki", userInfo: "Done", repeats: true)
     }
+*/
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
