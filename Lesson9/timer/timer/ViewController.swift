@@ -15,7 +15,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    var timer = NSTimer()
+    var timer: NSTimer?
     var cifre = 0.0
     
     @IBOutlet weak var startTimerButton: UIButton!
@@ -55,7 +55,7 @@ class ViewController: UIViewController {
     }
     
     func startTimer(){
-        timer.invalidate()
+        //timer.invalidate()
         startTimerButton.setTitle("Stop Timer", forState: .Normal)
         cifre = Double(timeTextField.text!)!
         countDownLabel.text = timeTextField.text
@@ -63,7 +63,7 @@ class ViewController: UIViewController {
         timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "neki", userInfo: "Done", repeats: true)
     }
     func resetTimer(){
-        timer.invalidate()
+        //timer.invalidate()
         startTimerButton.setTitle("Start Timer", forState: .Normal)
     }
     
@@ -86,7 +86,7 @@ class ViewController: UIViewController {
 */
     func appInterupted(){
         print("app interrupted")
-        timer.invalidate() //pause
+        timer!.invalidate() //pause
     }
     func appBecameActive(){
         print("app active from interupted")
@@ -115,6 +115,14 @@ class ViewController: UIViewController {
             alert.addAction(UIAlertAction(title: "Cancel", style: .Default) { _ in })
         }
         self.presentViewController(alert, animated: true){}
+    }
+    
+    deinit{
+        //pobrisi timer
+        //cleanUpTimer()
+        timer!.invalidate()
+        self.timer = nil
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }
 
