@@ -15,9 +15,9 @@ class TaskManager{
     
     static let sharedInstance = TaskManager()
     
-    var userDefaults = NSUserDefaults.standardUserDefaults()
-    
+    //var userDefaults = NSUserDefaults.standardUserDefaults()
     //lazy var tasks = [Task]()
+    
     //lazy var tasks = [NSManagedObject]()
     
     func saveTaskToCoreData(inputTask: Task?, inputImage: UIImage?){
@@ -44,6 +44,8 @@ class TaskManager{
         
         //image.setValue(imageData, forKey: "taskImage")
         task.setValue(inputTask, forKey: "task")
+        task.setValue(inputTask?.priority?.rawValue, forKey: "priority")
+        task.setValue(inputTask?.dateOfCreation, forKey: "dateOfCreation")
         task.setValue(smallImageData, forKey: "smallTaskImage")
 
 
@@ -168,31 +170,6 @@ class TaskManager{
 */
     
     
-    
-    /* ni koncano!!
-    func returnAllTasks() -> ([NSManagedObject], UIImage?){
-
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let managedContext = appDelegate.managedObjectContext
-        
-        let taskFetchRequest = NSFetchRequest(entityName: "Tasks")
-        let imageFetchRequest = NSFetchRequest(entityName: "taskImage")
-        
-        do {
-            var taskResults = try managedContext.executeFetchRequest(taskFetchRequest)
-            var imageResult = try managedContext.executeFetchRequest(imageFetchRequest)
-            taskResults = taskResults as! [NSManagedObject]
-            imageResult = imageResult as! [NSManagedObject]
-            
-            return(taskResults, imageResult) //popravi!
-            
-            
-            
-        } catch let error as NSError {
-            print("Could not fetch \(error), \(error.userInfo)")
-        }
-    }
-*/
     /*
     func saveDataToStorage() {
         let savedData = NSKeyedArchiver.archivedDataWithRootObject(tasks)

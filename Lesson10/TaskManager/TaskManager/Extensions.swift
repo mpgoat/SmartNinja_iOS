@@ -10,9 +10,9 @@ import Foundation
 import UIKit
 import CoreData
 
-//3DTouch 
+//3DTouch Peek & Pop
 extension TaskTableViewController: UIViewControllerPreviewingDelegate{
-    //peek
+    //Peek
     
     func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         
@@ -49,7 +49,7 @@ extension TaskTableViewController: UIViewControllerPreviewingDelegate{
         return previewVC
     }
     
-    // POP
+    // Pop
     func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
         if let stuffVC = storyboard?.instantiateViewControllerWithIdentifier("taskDetail") as? TaskDetailViewController{
             stuffVC.receivedTask = cachedTask

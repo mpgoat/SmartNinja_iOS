@@ -43,9 +43,9 @@ class TaskDetailViewController: UIViewController {
     @IBAction func selectPrioritySegment(sender: UISegmentedControl) {
         changed = true
         switch sender.selectedSegmentIndex{
-        case 0: priority = Priority(rawValue: "Normal")
-        case 1: priority = Priority(rawValue: "High")
-        case 2: priority = Priority(rawValue: "Mega")
+        case 0: priority = Priority.Normal
+        case 1: priority = Priority.High
+        case 2: priority = Priority.Mega
         default: 0
         }
     }
@@ -55,16 +55,7 @@ class TaskDetailViewController: UIViewController {
         self.taskNameLabel.text = "\(receivedTask!.taskName)\n\(receivedTask!.details)\nPriority: \(receivedTask!.priority!)\nStatus: \(receivedTask!.status!)"
         self.taskDetailImageView.image = taskImage
         
-        var intPriority: Int{
-            switch self.receivedTask?.priority?.rawValue{
-            case "Normal"?: return 0
-            case "High"?: return 1
-            case "Mega"?: return 2
-            default: return 0
-            }
-        }
-        
-        var intStatus: Int{
+        let intStatus: Int = {
             switch self.receivedTask?.status?.rawValue{
             case "Started"?: return 0
             case "InProgress"?: return 1
@@ -73,9 +64,9 @@ class TaskDetailViewController: UIViewController {
             
             default: return 0
             }
-        }
+        }()
         
-        self.taskPriority.selectedSegmentIndex = intPriority
+        self.taskPriority.selectedSegmentIndex = receivedTask!.priority!.rawValue
         self.taskStatus.selectedSegmentIndex = intStatus
         self.priority = receivedTask?.priority
         self.status = receivedTask?.status
@@ -84,10 +75,12 @@ class TaskDetailViewController: UIViewController {
     }
     
     override func viewWillDisappear(animated: Bool) {
+        //preveri kako uporabit saveContext, ki preveri ce so spremebe na contextu.
         if changed == true{
             let taskToSave = Task(taskName: taskName!, priority: priority!, details: taskDetails!, status: status!, image: taskImage)
             let task = managedObject
             task!.setValue(taskToSave, forKey: "task")
+            task!.setValue(taskToSave.priority?.rawValue, forKey: "priority")
             do{
                 try context.save()
                 NSNotificationCenter.defaultCenter().postNotificationName("taskChanged", object: nil)

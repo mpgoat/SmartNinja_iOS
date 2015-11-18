@@ -13,23 +13,26 @@ class TaskTableViewCell: UITableViewCell {
     @IBOutlet weak var taskNameLabel: UILabel!
     @IBOutlet weak var taskImageView: UIImageView!
 
-    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
     
-    func setCell(task: Task, image: UIImage?){ //taskName: String, taskDetails: String, status: Status, taskPriority: Priority?, taskImage: UIImage?
+    func setCell(task: Task, image: UIImage?){
+        var status: String?
+        let priority: String = {
+            switch task.priority?.rawValue{
+            case 0?: return "Normal"
+            case 1?: return "High"
+            case 2?: return "Mega"
+            default: return "Normal"
+            }
+        }()
         
-        var prioritae: String?
-        var statoos: String?
-        
-        if let priority = task.priority,
-        let status =  task.status{
-            prioritae = priority.rawValue
-            statoos = status.rawValue
+        if let tempStatus =  task.status{
+            status = tempStatus.rawValue
         }
         
-        self.taskNameLabel.text = "\(task.taskName)\n\(task.details)\nPriority: \(prioritae!)\nStatus: \(statoos!)"
+        self.taskNameLabel.text = "\(task.taskName)\n\(task.details)\nPriority: \(priority)\nStatus: \(status!)"
         self.taskImageView.image = image
     }
 }

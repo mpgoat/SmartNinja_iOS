@@ -19,37 +19,29 @@ class TaskViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     let taskManager = TaskManager.sharedInstance
     var priority = Priority.Normal
     let imagePicker = UIImagePickerController()
-    let saveQueue = dispatch_queue_create("saveQueue", DISPATCH_QUEUE_CONCURRENT)
     let managedContext = AppDelegate().managedObjectContext
     var taskImage: UIImage? = nil
     
+    @IBOutlet weak var taskImageView: UIImageView!
     @IBOutlet weak var taskNameTextField: UITextField!
     @IBOutlet weak var showAlerts: UILabel!
     @IBOutlet weak var detailsTextField: UITextField!
     @IBOutlet weak var showLastTask: UILabel!
     @IBOutlet weak var prioritySegment: UISegmentedControl!
-    
     @IBAction func selctImage(sender: UIButton) {
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .PhotoLibrary
         presentViewController(imagePicker, animated: true, completion: nil)
     }
-    
     @IBAction func selectPrioritySegment(sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex{
-        case 0:
-            priority = Priority.Normal
-
-        case 1:
-            priority = Priority.High
-
-        case 2:
-            priority = Priority.Mega
-
+        case 0: priority = Priority.Normal
+        case 1: priority = Priority.High
+        case 2: priority = Priority.Mega
         default: 0
         }
     }
-    
+    //ne deluje
     @IBAction func deleteAll(sender: UIButton) {
         if showAlerts.text == "Currently there are 0 tasks in queue"{
             createAlert("No Tasks To Delete!", alertMessage: "", action: .okAction)
@@ -63,28 +55,19 @@ class TaskViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             if taskName.isEmpty{
                 createAlert("Task Name is Empty!", alertMessage: "Please enter a Task name", action: .okAction)
             }
-            //else if detailsText.isEmpty{
-            //    createAlert("Details Content is Empty!", alertMessage: "Please enter some details", action: .okAction)
-            //}
             else{
-
-                //dispatch_async(GlobalUserInteractiveQueue) {
-                    let newTask = Task(taskName: taskName, priority: self.priority, details: detailsText, status: .Started, image: self.taskImage)
-                    self.taskManager.addTask(newTask, addedImage: self.taskImage)
-                    //dispatch_async(GlobalMainQueue) {
-                        self.updateDisplay()
-                    //}
-                //}
+                let newTask = Task(taskName: taskName, priority: self.priority, details: detailsText, status: .Started, image: self.taskImage)
+                self.taskManager.addTask(newTask, addedImage: self.taskImage)
+                self.updateDisplay()
             }
         }
     }
     
-    
-    
-    @IBOutlet weak var taskImageView: UIImageView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //NSNotificationCenter.defaultCenter().addObserver(self, selector: "didDeactivate", name: UIApplicationWillResignActiveNotification, object: nil)
+        //NSNotificationCenter.defaultCenter().addObserver(self, selector: "didActivate", name: UIApplicationDidBecomeActiveNotification, object: nil)
         imagePicker.delegate = self
         let tapOutsideOfKeyboard: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "DismissKeyboard")
         view.addGestureRecognizer(tapOutsideOfKeyboard)
@@ -104,13 +87,10 @@ class TaskViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             
         case .areYouSureAction:
             alert.addAction(UIAlertAction(title: "I Am Sure", style: .Default) { _ in
-                //self.taskManager.deleteAllTasks() se ne dela
                 self.updateDisplay()
             })
-            
         alert.addAction(UIAlertAction(title: "Cancel", style: .Default) { _ in })
         }
-        
         self.presentViewController(alert, animated: true){}
     }
     
@@ -118,9 +98,6 @@ class TaskViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         self.prioritySegment.selectedSegmentIndex = 0
         self.priority = .Normal
         self.taskNameTextField.text = ""
-        //self.showAlerts.text = self.taskManager.returnNumberOfTasksInQueue()
-       // self.showLastTask.attributedText = self.taskManager.returnLastTaskNameAndDate()
-        //self.detailsTextField.text = "Enter Details"
         self.taskImageView.image = nil
     }
     
@@ -128,7 +105,6 @@ class TaskViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             taskImageView.contentMode = .ScaleAspectFit
             taskImageView.image = pickedImage
-            
             taskImage = pickedImage
             print("success!")
         }
@@ -137,6 +113,10 @@ class TaskViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
 }

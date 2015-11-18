@@ -88,7 +88,6 @@ class Task: NSObject, NSCoding{
         taskCoder.encodeObject(status!.rawValue, forKey: "status")
         taskCoder.encodeObject(dateOfCreation, forKey: "dateOfCreation")
         taskCoder.encodeObject(dateOfLastChange, forKey: "dateOfLastChange")
-        //UIImageJPEGRepresentation za uiimage v nsdata
         taskCoder.encodeObject(image, forKey: "image")
     }
     /*

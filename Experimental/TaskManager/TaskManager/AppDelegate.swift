@@ -70,6 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // The persistent store coordinator for the application. This implementation creates and returns a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
+//dodal async
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("SingleViewCoreData.sqlite")
         var failureReason = "There was an error creating or loading the application's saved data."
@@ -127,7 +128,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             //segue.destinationViewController as! UINavigationController).topViewController as! QuestionnaireController
             
-            let root = UIApplication.sharedApplication().keyWindow?.rootViewController
+            let root = UIApplication.sharedApplication().keyWindow?.rootViewController as?UINavigationController
 
             root?.presentViewController(navigationController, animated: false, completion: { () -> Void in
                 completionHandler(true)
