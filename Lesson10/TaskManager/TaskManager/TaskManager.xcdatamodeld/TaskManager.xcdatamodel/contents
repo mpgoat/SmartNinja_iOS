@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="15B42" minimumToolsVersion="Automatic">
+    <entity name="Task" representedClassName="." syncable="YES">
+        <attribute name="smallTaskImage" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="task" optional="YES" attributeType="Transformable" syncable="YES"/>
+    </entity>
+    <entity name="TaskImage" representedClassName="." syncable="YES">
+        <attribute name="taskImage" optional="YES" attributeType="Binary" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Task" positionX="315" positionY="11" width="128" height="75"/>
+        <element name="TaskImage" positionX="99" positionY="-18" width="128" height="60"/>
+    </elements>
+</model>
