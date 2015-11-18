@@ -18,7 +18,7 @@ enum Priority: String{
 enum Status: String{
     case Started = "Started"
     case Finished = "Finished"
-    case Procrastinatig = "Procrastinatig"
+    case Procrastinatig = "Procrastinating"
     case InProgress = "InProgress"
 }
 

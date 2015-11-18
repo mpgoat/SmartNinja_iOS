@@ -14,8 +14,11 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
     @IBOutlet weak var taskTableView: UITableView!
     
     var context: NSManagedObjectContext!
+    
     var cachedTask: Task?
     var cachedImage: UIImage?
+    var cachedContext: NSManagedObjectContext?
+    var cachedManagedObject: NSManagedObject?
     
     lazy var fetchedTaskResultsController: NSFetchedResultsController = {
         
@@ -64,7 +67,7 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
         }
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "taskAddedHandler:", name: "taskAdded", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "taskDeletedHandler:", name: "taskDeleted", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "taskChangedHandler:", name: "taskDeleted", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "taskChangedHandler:", name: "taskChanged", object: nil)
         
         do {
             try fetchedTaskResultsController.performFetch()
@@ -76,7 +79,7 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
     }
     
     func taskAddedHandler(notification: NSNotification){
-         dispatch_async(GlobalUserInteractiveQueue){
+         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
             do {
                 try self.fetchedTaskResultsController.performFetch()
                 //try self.fetchedImageResultsController.performFetch()
@@ -88,8 +91,15 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
     }
     
     func taskDeletedHandler(notification: NSNotification){
+        //var userInfo = notification.userInfo!
+        //print(userInfo)
+        //let indexPath = userInfo["indexPath"] as! NSIndexPath
+        //self.taskTableView.
+        //self.taskTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+        //
         dispatch_async(GlobalMainQueue){
             do {
+                print("Deleted!")
                 try self.fetchedTaskResultsController.performFetch()
                 //try self.fetchedImageResultsController.performFetch()
             } catch {
@@ -102,6 +112,7 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
     func taskChangedHandler(notification: NSNotification){
         dispatch_async(GlobalMainQueue){
             do {
+                print("Updated!")
                 try self.fetchedTaskResultsController.performFetch()
                 //try self.fetchedImageResultsController.performFetch()
             } catch {
@@ -118,7 +129,6 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
         if let sections = fetchedTaskResultsController.sections {
             return sections.count
         }
-        
         return 0
     }
     
@@ -128,10 +138,9 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
             let currentSection = sections[section]
             return currentSection.numberOfObjects
         }
-        
         return 0
     }
-    
+
     func prepareImageForPresentation(data: NSData) -> UIImage?{
         guard let image = UIImage(data: data)
             else {
@@ -154,6 +163,17 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
                     taskImage = prepareImageForPresentation(image)
                     print(taskImage?.size)
                 }
+                switch task.priority?.rawValue{
+                case "Normal"?: cell.backgroundColor = UIColor.whiteColor()
+                case "High"?: cell.backgroundColor = UIColor.orangeColor()
+                case "Mega"?: cell.backgroundColor = UIColor.redColor()
+                default: cell.backgroundColor = UIColor.whiteColor()
+                }
+                if task.status?.rawValue == "Finished"{
+                    cell.backgroundColor = UIColor.grayColor()
+                }else if task.status?.rawValue != "Finished"{
+                    cell.backgroundColor = UIColor.whiteColor()
+                }
                 cell.setCell(task, image: taskImage)
         }
         
@@ -161,11 +181,10 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
     }
     /*
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    if let sections = fetchedResultsController.sections {
+    if let sections = fetchedTaskResultsController.sections {
     let currentSection = sections[section]
     return ("Task at: \(currentSection.name)")
     }
-    
     return nil
     }
     */
@@ -182,7 +201,8 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
                 context.deleteObject(managedTask)
                 do {
                     try self.context.save()
-                    NSNotificationCenter.defaultCenter().postNotificationName("taskDeleted", object: nil)
+                    let userInfo = ["indexPath": indexPath]
+                    NSNotificationCenter.defaultCenter().postNotificationName("taskDeleted", object: nil, userInfo: userInfo)
                     //self.fetchedResultsController.managedObjectContext.reset()
                 } catch {
                     print("An error WHILE SAVING")
@@ -192,14 +212,11 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
         }
     }
     
-    /*
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        print(indexPath)
-        print("pressed")
-        self.performSegueWithIdentifier("showTaskDetail", sender: indexPath);
     }
-    */
+
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "showTaskDetail") {
@@ -211,10 +228,11 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
                     if let img = managedTask.valueForKey("smallTaskImage") as? NSData{
                         vc.taskImage = prepareImageForPresentation(img)
                     }
+                    vc.managedObject = managedTask
                     vc.receivedTask = task
+                    vc.indexPath = indexPath
+                    vc.context = context
                 }
-                //let row = (sender as! NSIndexPath).row
-                
             }
         }
     }

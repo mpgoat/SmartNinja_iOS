@@ -32,8 +32,15 @@ extension TaskTableViewController: UIViewControllerPreviewingDelegate{
             else{
                 cachedImage = nil
                 }
+                
+                previewVC.context = context
+                previewVC.managedObject = managedTask
+                previewVC.indexPath = indexPath
                 previewVC.receivedTask = selectedTask
+                
                 cachedTask = selectedTask
+                cachedContext = context
+                cachedManagedObject = managedTask
         }else{
             cachedTask = nil
         }
@@ -47,6 +54,8 @@ extension TaskTableViewController: UIViewControllerPreviewingDelegate{
         if let stuffVC = storyboard?.instantiateViewControllerWithIdentifier("taskDetail") as? TaskDetailViewController{
             stuffVC.receivedTask = cachedTask
             stuffVC.taskImage = cachedImage
+            stuffVC.context = cachedContext
+            stuffVC.managedObject = cachedManagedObject
             showViewController(stuffVC, sender: self)
         }
     }

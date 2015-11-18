@@ -63,9 +63,9 @@ class TaskViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             if taskName.isEmpty{
                 createAlert("Task Name is Empty!", alertMessage: "Please enter a Task name", action: .okAction)
             }
-            else if detailsText.isEmpty{
-                createAlert("Details Content is Empty!", alertMessage: "Please enter some details", action: .okAction)
-            }
+            //else if detailsText.isEmpty{
+            //    createAlert("Details Content is Empty!", alertMessage: "Please enter some details", action: .okAction)
+            //}
             else{
 
                 //dispatch_async(GlobalUserInteractiveQueue) {
@@ -119,7 +119,7 @@ class TaskViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         self.taskNameTextField.text = ""
         //self.showAlerts.text = self.taskManager.returnNumberOfTasksInQueue()
        // self.showLastTask.attributedText = self.taskManager.returnLastTaskNameAndDate()
-        self.detailsTextField.text = "Enter Details"
+        //self.detailsTextField.text = "Enter Details"
         self.taskImageView.image = nil
     }
     

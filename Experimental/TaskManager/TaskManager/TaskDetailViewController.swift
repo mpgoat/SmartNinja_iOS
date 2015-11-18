@@ -12,45 +12,47 @@ import CoreData
 class TaskDetailViewController: UIViewController {
     
     var context: NSManagedObjectContext!
+    var managedObject: NSManagedObject?
+    var indexPath: NSIndexPath?
+    
     var priority: Priority?
     var status: Status?
-    
-    @IBOutlet weak var taskDetailImageView: UIImageView!
-    @IBOutlet weak var taskNameLabel: UILabel!
-    @IBOutlet weak var taskStatus: UISegmentedControl!
-    @IBOutlet weak var taskPriority: UISegmentedControl!
-    
     var receivedTask: Task?
     var taskImage: UIImage?
     
-    @IBAction func selectPrioritySegment(sender: UISegmentedControl) {
+    var taskName: String?
+    var taskDetails: String?
+    var changed = false
+    
+    @IBOutlet weak var taskDetailImageView: UIImageView!
+    @IBOutlet weak var taskNameLabel: UILabel!
+    @IBOutlet weak var taskPriority: UISegmentedControl!
+    @IBOutlet weak var taskStatus: UISegmentedControl!
+    
+    @IBAction func taskStatus(sender: UISegmentedControl) {
+        changed = true
         switch sender.selectedSegmentIndex{
-        case 0:
-            priority = Priority(rawValue: "Normal")!
-            
-        case 1:
-            priority = Priority(rawValue: "High")!
-            
-        case 2:
-            priority = Priority(rawValue: "Mega")!
-            
+            case 0: status = Status(rawValue: "Started")
+            case 1: status = Status(rawValue: "InProgress")
+            case 2: status = Status(rawValue: "Procrastinating")
+            case 3: status = Status(rawValue: "Finished")
+            default: 0
+        }
+    }
+    
+    @IBAction func selectPrioritySegment(sender: UISegmentedControl) {
+        changed = true
+        switch sender.selectedSegmentIndex{
+        case 0: priority = Priority(rawValue: "Normal")
+        case 1: priority = Priority(rawValue: "High")
+        case 2: priority = Priority(rawValue: "Mega")
         default: 0
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        var prioritae: String?
-        var statoos: String?
-        
-        if let priority = receivedTask!.priority,
-            let status =  receivedTask!.status{
-                prioritae = priority.rawValue
-                statoos = status.rawValue
-        }
-        
-        self.taskNameLabel.text = "\(receivedTask!.taskName)\n\(receivedTask!.details)\nPriority: \(prioritae!)\nStatus: \(statoos!)"
+        self.taskNameLabel.text = "\(receivedTask!.taskName)\n\(receivedTask!.details)\nPriority: \(receivedTask!.priority!)\nStatus: \(receivedTask!.status!)"
         self.taskDetailImageView.image = taskImage
         
         var intPriority: Int{
@@ -65,35 +67,39 @@ class TaskDetailViewController: UIViewController {
         var intStatus: Int{
             switch self.receivedTask?.status?.rawValue{
             case "Started"?: return 0
-            case "Finished"?: return 1
-            case "Procrastinatig"?: return 2
-            case "InProgress"?: return 3
+            case "InProgress"?: return 1
+            case "Procrastinating"?: return 2
+            case "Finished"?: return 3
+            
             default: return 0
             }
         }
+        
         self.taskPriority.selectedSegmentIndex = intPriority
         self.taskStatus.selectedSegmentIndex = intStatus
+        self.priority = receivedTask?.priority
+        self.status = receivedTask?.status
+        self.taskName = receivedTask?.taskName
+        self.taskDetails = receivedTask?.details
     }
     
-    
+    override func viewWillDisappear(animated: Bool) {
+        if changed == true{
+            let taskToSave = Task(taskName: taskName!, priority: priority!, details: taskDetails!, status: status!, image: taskImage)
+            let task = managedObject
+            task!.setValue(taskToSave, forKey: "task")
+            do{
+                try context.save()
+                NSNotificationCenter.defaultCenter().postNotificationName("taskChanged", object: nil)
+            }catch{
+                print("error while updating Task")
+            }
+        }
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
