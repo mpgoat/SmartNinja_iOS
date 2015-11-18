@@ -17,7 +17,7 @@ enum AlertAction{
 class TaskViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     let taskManager = TaskManager.sharedInstance
-    var priority = Priority(rawValue: "Normal")!
+    var priority = Priority.Normal
     let imagePicker = UIImagePickerController()
     let saveQueue = dispatch_queue_create("saveQueue", DISPATCH_QUEUE_CONCURRENT)
     let managedContext = AppDelegate().managedObjectContext
@@ -38,13 +38,13 @@ class TaskViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     @IBAction func selectPrioritySegment(sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex{
         case 0:
-            priority = Priority(rawValue: "Normal")!
+            priority = Priority.Normal
 
         case 1:
-            priority = Priority(rawValue: "High")!
+            priority = Priority.High
 
         case 2:
-            priority = Priority(rawValue: "Mega")!
+            priority = Priority.Mega
 
         default: 0
         }
@@ -116,6 +116,7 @@ class TaskViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     func updateDisplay(){
         self.prioritySegment.selectedSegmentIndex = 0
+        self.priority = .Normal
         self.taskNameTextField.text = ""
         //self.showAlerts.text = self.taskManager.returnNumberOfTasksInQueue()
        // self.showLastTask.attributedText = self.taskManager.returnLastTaskNameAndDate()

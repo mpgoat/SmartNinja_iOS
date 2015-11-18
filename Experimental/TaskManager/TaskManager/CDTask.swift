@@ -5,7 +5,7 @@
 //  Created by miha perne on 21/10/15.
 //  Copyright © 2015 miha perne. All rights reserved.
 //
-
+/*
 import Foundation
 import CoreData
 /*
@@ -100,4 +100,5 @@ class CDTask: NSManagedObject{//, NSCoding
     }
     */
 }
+*/ 
 

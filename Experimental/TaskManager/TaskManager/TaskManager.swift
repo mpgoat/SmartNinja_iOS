@@ -44,6 +44,7 @@ class TaskManager{
         
         //image.setValue(imageData, forKey: "taskImage")
         task.setValue(inputTask, forKey: "task")
+        task.setValue(inputTask?.priority?.rawValue, forKey: "priority")
         task.setValue(smallImageData, forKey: "smallTaskImage")
 
 

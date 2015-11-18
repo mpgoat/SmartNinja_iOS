@@ -9,10 +9,10 @@
 import Foundation
 import UIKit
 
-enum Priority: String{
-    case Normal = "Normal"
-    case High = "High"
-    case Mega = "Mega"
+enum Priority: Int{
+    case Normal = 0 
+    case High = 1
+    case Mega = 2
 }
 
 enum Status: String{
@@ -36,7 +36,7 @@ class Task: NSObject, NSCoding{
         }
     }
 
-    var priority = Priority(rawValue: "Normal"){
+    var priority = Priority(rawValue: 0){
         didSet{
             dateOfLastChange = NSDate()
         }
@@ -73,7 +73,7 @@ class Task: NSObject, NSCoding{
     */
     required init(coder taskDecoder: NSCoder) {
         status = Status(rawValue: taskDecoder.decodeObjectForKey("status") as! String) ?? Status.Started
-        priority = Priority(rawValue: taskDecoder.decodeObjectForKey("priority") as! String) ?? Priority.Normal
+        priority = Priority(rawValue: taskDecoder.decodeObjectForKey("priority") as! Int) ?? Priority.Normal
         taskName = taskDecoder.decodeObjectForKey("taskName") as! String
         details = taskDecoder.decodeObjectForKey("details") as! String
         dateOfCreation = taskDecoder.decodeObjectForKey("dateOfCreation") as! NSDate

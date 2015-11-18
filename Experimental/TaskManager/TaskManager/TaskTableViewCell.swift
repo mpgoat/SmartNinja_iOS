@@ -20,16 +20,23 @@ class TaskTableViewCell: UITableViewCell {
     
     func setCell(task: Task, image: UIImage?){ //taskName: String, taskDetails: String, status: Status, taskPriority: Priority?, taskImage: UIImage?
         
-        var prioritae: String?
+        //var prioritae: String?
         var statoos: String?
         
-        if let priority = task.priority,
-        let status =  task.status{
-            prioritae = priority.rawValue
+        let prioritae: String = {
+            switch task.priority?.rawValue{
+            case 0?: return "Normal"
+            case 1?: return "High"
+            case 2?: return "Mega"
+            default: return "Normal"
+            }
+        }()
+        
+        if let status =  task.status{
             statoos = status.rawValue
         }
         
-        self.taskNameLabel.text = "\(task.taskName)\n\(task.details)\nPriority: \(prioritae!)\nStatus: \(statoos!)"
+        self.taskNameLabel.text = "\(task.taskName)\n\(task.details)\nPriority: \(prioritae)\nStatus: \(statoos!)"
         self.taskImageView.image = image
     }
 }

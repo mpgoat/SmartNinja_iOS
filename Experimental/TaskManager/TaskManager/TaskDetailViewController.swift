@@ -43,9 +43,9 @@ class TaskDetailViewController: UIViewController {
     @IBAction func selectPrioritySegment(sender: UISegmentedControl) {
         changed = true
         switch sender.selectedSegmentIndex{
-        case 0: priority = Priority(rawValue: "Normal")
-        case 1: priority = Priority(rawValue: "High")
-        case 2: priority = Priority(rawValue: "Mega")
+        case 0: priority = Priority.Normal
+        case 1: priority = Priority.High
+        case 2: priority = Priority.Mega
         default: 0
         }
     }
@@ -56,10 +56,10 @@ class TaskDetailViewController: UIViewController {
         self.taskDetailImageView.image = taskImage
         
         var intPriority: Int{
-            switch self.receivedTask?.priority?.rawValue{
-            case "Normal"?: return 0
-            case "High"?: return 1
-            case "Mega"?: return 2
+            switch self.receivedTask?.priority{
+            case .Normal?: return 0
+            case .High?: return 1
+            case .Mega?: return 2
             default: return 0
             }
         }
@@ -88,6 +88,7 @@ class TaskDetailViewController: UIViewController {
             let taskToSave = Task(taskName: taskName!, priority: priority!, details: taskDetails!, status: status!, image: taskImage)
             let task = managedObject
             task!.setValue(taskToSave, forKey: "task")
+            task!.setValue(taskToSave.priority?.rawValue, forKey: "priority")
             do{
                 try context.save()
                 NSNotificationCenter.defaultCenter().postNotificationName("taskChanged", object: nil)

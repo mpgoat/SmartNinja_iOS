@@ -28,7 +28,7 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
         //asyncRequest.fetchRequest.fetchBatchSize = 10
         tasksFetchRequest.fetchBatchSize = 10
         
-        let sortDescriptor = NSSortDescriptor(key: "task", ascending: true)
+        let sortDescriptor = NSSortDescriptor(key: "priority", ascending: false)
         //asyncRequest.fetchRequest.sortDescriptors = [sortDescriptor]
         tasksFetchRequest.sortDescriptors = [sortDescriptor]
         
@@ -163,16 +163,19 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
                     taskImage = prepareImageForPresentation(image)
                     print(taskImage?.size)
                 }
-                switch task.priority?.rawValue{
-                case "Normal"?: cell.backgroundColor = UIColor.whiteColor()
-                case "High"?: cell.backgroundColor = UIColor.orangeColor()
-                case "Mega"?: cell.backgroundColor = UIColor.redColor()
-                default: cell.backgroundColor = UIColor.whiteColor()
-                }
+                let tableColor: UIColor = {
+                    switch task.priority{
+                    case .Normal?: return UIColor.whiteColor()
+                    case .High?: return UIColor.orangeColor()
+                    case .Mega?: return UIColor.redColor()
+                    default: return UIColor.whiteColor()
+                    }
+                }()
+                
                 if task.status?.rawValue == "Finished"{
-                    cell.backgroundColor = UIColor.grayColor()
+                    cell.backgroundColor = UIColor.lightGrayColor()
                 }else if task.status?.rawValue != "Finished"{
-                    cell.backgroundColor = UIColor.whiteColor()
+                    cell.backgroundColor = tableColor
                 }
                 cell.setCell(task, image: taskImage)
         }
