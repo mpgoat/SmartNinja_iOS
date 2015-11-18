@@ -11,30 +11,25 @@ import UIKit
 class TaskTableViewCell: UITableViewCell {
 
     @IBOutlet weak var taskNameLabel: UILabel!
-    @IBOutlet weak var taskDetailsLabel: UILabel!
-    @IBOutlet weak var taskPriorityLabel: UILabel!
     @IBOutlet weak var taskImageView: UIImageView!
+
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
-/*
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    */
-    func setCell(taskName: String, taskDetails: String, taskPriority: Priority?, taskImage: UIImage?){
-        self.taskNameLabel.text = taskName
-        self.taskDetailsLabel.text = taskDetails
-        if let priority = taskPriority{
-            self.taskPriorityLabel.text = priority.rawValue
+    
+    func setCell(task: Task, image: UIImage?){ //taskName: String, taskDetails: String, status: Status, taskPriority: Priority?, taskImage: UIImage?
+        
+        var prioritae: String?
+        var statoos: String?
+        
+        if let priority = task.priority,
+        let status =  task.status{
+            prioritae = priority.rawValue
+            statoos = status.rawValue
         }
-        self.taskImageView.image = taskImage
-        self.selectionStyle = .None
-        //self.setSelected(true, animated: true)
+        
+        self.taskNameLabel.text = "\(task.taskName)\n\(task.details)\nPriority: \(prioritae!)\nStatus: \(statoos!)"
+        self.taskImageView.image = image
     }
-
 }

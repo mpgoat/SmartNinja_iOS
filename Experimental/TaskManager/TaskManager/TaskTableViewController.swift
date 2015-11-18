@@ -64,6 +64,7 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
         }
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "taskAddedHandler:", name: "taskAdded", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "taskDeletedHandler:", name: "taskDeleted", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "taskChangedHandler:", name: "taskDeleted", object: nil)
         
         do {
             try fetchedTaskResultsController.performFetch()
@@ -84,7 +85,6 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
             }
             self.taskTableView.reloadData()
         }
-        
     }
     
     func taskDeletedHandler(notification: NSNotification){
@@ -97,7 +97,18 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
             }
             self.taskTableView.reloadData()
         }
-        
+    }
+    
+    func taskChangedHandler(notification: NSNotification){
+        dispatch_async(GlobalMainQueue){
+            do {
+                try self.fetchedTaskResultsController.performFetch()
+                //try self.fetchedImageResultsController.performFetch()
+            } catch {
+                print("An error occurred")
+            }
+            self.taskTableView.reloadData()
+        }
     }
     
     
@@ -143,7 +154,7 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
                     taskImage = prepareImageForPresentation(image)
                     print(taskImage?.size)
                 }
-                cell.setCell(task.taskName, taskDetails: task.details, taskPriority: task.priority!, taskImage: taskImage)
+                cell.setCell(task, image: taskImage)
         }
         
         return cell
@@ -177,6 +188,33 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
                     print("An error WHILE SAVING")
                 }
                 self.taskTableView.reloadData()
+            }
+        }
+    }
+    
+    /*
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        print(indexPath)
+        print("pressed")
+        self.performSegueWithIdentifier("showTaskDetail", sender: indexPath);
+    }
+    */
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "showTaskDetail") {
+            let indexPath = taskTableView.indexPathForSelectedRow
+            let vc = segue.destinationViewController as! TaskDetailViewController
+            
+            if let managedTask = fetchedTaskResultsController.objectAtIndexPath(indexPath!) as? NSManagedObject{
+                if let task = managedTask.valueForKey("Task") as? Task{
+                    if let img = managedTask.valueForKey("smallTaskImage") as? NSData{
+                        vc.taskImage = prepareImageForPresentation(img)
+                    }
+                    vc.receivedTask = task
+                }
+                //let row = (sender as! NSIndexPath).row
+                
             }
         }
     }
