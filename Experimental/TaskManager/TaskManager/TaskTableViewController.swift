@@ -13,12 +13,12 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
     
     @IBOutlet weak var taskTableView: UITableView!
     
-    var context: NSManagedObjectContext!
+    weak var context: NSManagedObjectContext!
     
-    var cachedTask: Task?
-    var cachedImage: UIImage?
-    var cachedContext: NSManagedObjectContext?
-    var cachedManagedObject: NSManagedObject?
+    weak var cachedTask: Task?
+    weak var cachedImage: UIImage?
+    weak var cachedContext: NSManagedObjectContext?
+    weak var cachedManagedObject: NSManagedObject?
     
     lazy var fetchedTaskResultsController: NSFetchedResultsController = {
         let tasksFetchRequest = NSFetchRequest(entityName: "Task")
@@ -206,5 +206,15 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
             return nil
         }
         return image
+    }
+    
+    override func didReceiveMemoryWarning() {
+        do {
+            try self.context.save()
+            print("memory warning")
+        } catch {
+            print("An error while saving at memory warning")
+        }
+        context.reset()
     }
 }

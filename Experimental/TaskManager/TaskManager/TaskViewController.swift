@@ -19,9 +19,10 @@ class TaskViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     let taskManager = TaskManager.sharedInstance
     var priority = Priority.Normal
     let imagePicker = UIImagePickerController()
-    let managedContext = AppDelegate().managedObjectContext
+    //let managedContext = AppDelegate().managedObjectContext
     var taskImage: UIImage? = nil
     
+    @IBOutlet weak var addTaskButton: UIButton!
     @IBOutlet weak var taskImageView: UIImageView!
     @IBOutlet weak var taskNameTextField: UITextField!
     @IBOutlet weak var showAlerts: UILabel!
@@ -59,6 +60,14 @@ class TaskViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                 let newTask = Task(taskName: taskName, priority: self.priority, details: detailsText, status: .Started, image: self.taskImage)
                 self.taskManager.addTask(newTask, addedImage: self.taskImage)
                 self.updateDisplay()
+                
+                UIView.animateWithDuration(0.1, delay: 0, options: [], animations: {
+                    self.addTaskButton.transform = CGAffineTransformMakeScale(1.5, 1.5)
+                    }, completion: {
+                        completed in UIView.animateWithDuration(0.1, animations: {
+                            self.addTaskButton.transform = CGAffineTransformIdentity
+                        })
+                })
             }
         }
     }
@@ -119,5 +128,9 @@ class TaskViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        //neki naredi 
+    }
 }
 

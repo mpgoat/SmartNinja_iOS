@@ -11,8 +11,8 @@ import CoreData
 
 class TaskDetailViewController: UIViewController {
     
-    var context: NSManagedObjectContext!
-    var managedObject: NSManagedObject?
+    weak var context: NSManagedObjectContext!
+    weak var managedObject: NSManagedObject?
     var indexPath: NSIndexPath?
     
     var priority: Priority?
