@@ -37,6 +37,7 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
             print(koordinate)
             
             location.getUsersClosestCity(koordinate) {
+                //(answer: [String]) -> Void)
                 (locationInfo: [String]) in
                 print("locInfo:\(locationInfo)")
                 

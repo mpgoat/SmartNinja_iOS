@@ -25,7 +25,13 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
         let sortDescriptor = NSSortDescriptor(key: "priority", ascending: false)
         tasksFetchRequest.sortDescriptors = [sortDescriptor]
         tasksFetchRequest.fetchBatchSize = 10
+        //tasksFetchRequest.resultType = .DictionaryResultType
+        tasksFetchRequest.propertiesToFetch = ["dateOfCreation", "task", "smallTaskImage", "priority"]
+        //tasksFetchRequest.propertiesToGroupBy = ["dateOfCreation"]
+        
 
+        //tasksFetchRequest.relationshipKeyPathsForPrefetching
+        
         let frc = NSFetchedResultsController(
             fetchRequest: tasksFetchRequest,
             managedObjectContext: self.context,
@@ -63,8 +69,7 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
                 try self.fetchedTaskResultsController.performFetch()
             } catch {
                 print("An error occurred")
-            }
-            self.taskTableView.reloadData() //hammer time
+            }//hammer time
         }
     }
     
@@ -99,6 +104,10 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
         }
     }
     
+    override func viewWillAppear(animated: Bool) {
+        self.taskTableView.reloadData()
+    }
+
     
     // MARK: TableView Data Source
     
@@ -129,6 +138,8 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
         
         var taskImage: UIImage? = nil
         let cell: TaskTableViewCell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! TaskTableViewCell
+        
+        let resultsDict = Dictionary <NSDate, Task>()
         
         if let managedTask = fetchedTaskResultsController.objectAtIndexPath(indexPath) as? NSManagedObject,
             let task = managedTask.valueForKey("task") as? Task{

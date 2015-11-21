@@ -21,6 +21,8 @@ class Weather{
 
             let urlSession = NSURLSession.sharedSession()
             let task = urlSession.dataTaskWithURL(weatherUrl) { data, response, error -> Void in
+                print("DATA:\(data)")
+                print("RESPONSE:\(response)")
                 if error != nil {
                     print(error)
                 }
