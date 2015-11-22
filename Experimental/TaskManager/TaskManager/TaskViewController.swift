@@ -106,6 +106,7 @@ class TaskViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     func updateDisplay(){
         self.prioritySegment.selectedSegmentIndex = 0
         self.priority = .Normal
+        self.detailsTextField.text = ""
         self.taskNameTextField.text = ""
         self.taskImageView.image = nil
     }

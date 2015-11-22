@@ -6,7 +6,7 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Tasks-->
+        <!--Task Table View Controller-->
         <scene sceneID="22e-KI-kjK">
             <objects>
                 <tableViewController storyboardIdentifier="taskCellVC" id="KDY-fO-rKx" customClass="TaskTableViewController" customModule="TaskManager" customModuleProvider="target" sceneMemberID="viewController">
@@ -14,7 +14,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="Cell" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="100" id="rGH-mN-X9p" customClass="TaskTableViewCell" customModule="TaskManager" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="600" height="100"/>
@@ -23,7 +23,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="100"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hhz-tz-Xgs">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hhz-tz-Xgs">
                                             <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                             <animations/>
                                         </imageView>
@@ -38,6 +38,7 @@
                                     <animations/>
                                 </tableViewCellContentView>
                                 <animations/>
+                                <gestureRecognizers/>
                                 <connections>
                                     <outlet property="taskImageView" destination="Hhz-tz-Xgs" id="Gt1-ge-vVb"/>
                                     <outlet property="taskNameLabel" destination="MwU-Dh-CEE" id="U1Z-ge-SaU"/>
@@ -50,7 +51,7 @@
                             <outlet property="delegate" destination="KDY-fO-rKx" id="yKd-WX-PuJ"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Tasks" id="H40-5m-Qqc">
+                    <navigationItem key="navigationItem" id="H40-5m-Qqc">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="W5a-Wx-ukI">
                             <connections>
                                 <segue destination="BYZ-38-t0r" kind="show" identifier="addTask" id="Za6-8a-BL6"/>

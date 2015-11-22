@@ -17,7 +17,7 @@ import UIKit
 
 class PhotoListTableViewController: UITableViewController {
     
-    let carBrands: [String] = ["porsche", "ferrari", "mclaren", "pagani", "koenigsegg", "tesla", "bac", "lamborghini", "audi", "bugatii"]
+    let carBrands: [String] = ["porsche", "ferrari", "mclaren", "pagani", "koenigsegg", "tesla", "lamborghini", "audi", "bugatii"]
     let manager : PhotoManager = PhotoManager()
     var photos: [Photo]!
     

@@ -45,6 +45,8 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        taskTableView.tableFooterView = UIView()
+        
         if traitCollection.forceTouchCapability == .Available{
             registerForPreviewingWithDelegate(self, sourceView: taskTableView)
         }
@@ -60,6 +62,33 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
             print("An error occurred")
         }
         
+    }
+    
+    func zaznanDolgiPritisk(gestureRecognizer: UIGestureRecognizer){
+        if gestureRecognizer.state == UIGestureRecognizerState.Began {
+            let touchPoint = gestureRecognizer.locationInView(self.view)
+            if let indexPath = taskTableView.indexPathForRowAtPoint(touchPoint) {
+                
+                let alert = UIAlertController(title: "Delete Task?", message:"Please confirm Task Deletion", preferredStyle: .Alert)
+                
+                alert.addAction(UIAlertAction(title: "OK", style: .Default) { _ in
+                    if let managedTask = self.fetchedTaskResultsController.objectAtIndexPath(indexPath) as? NSManagedObject{
+                        do {
+                            self.context.deleteObject(managedTask)
+                            try self.context.save()
+                            let userInfo = ["indexPath": indexPath]
+                            NSNotificationCenter.defaultCenter().postNotificationName("taskDeleted", object: nil, userInfo: userInfo)
+                        } catch {
+                            print("An error while saving after deletion")
+                        }
+                        self.taskTableView.reloadData()
+                    }
+                })
+                alert.addAction(UIAlertAction(title: "Cancel", style: .Default) { _ in })
+                self.presentViewController(alert, animated: true){}
+            }
+        }
+        print("zaznan dolg pritisk")
     }
     
     func taskAddedHandler(notification: NSNotification){
@@ -143,31 +172,37 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
         
         if let managedTask = fetchedTaskResultsController.objectAtIndexPath(indexPath) as? NSManagedObject,
             let task = managedTask.valueForKey("task") as? Task{
+                //add cell long press gesture recogniser
+                let longPress = UILongPressGestureRecognizer(target: self, action: "zaznanDolgiPritisk:")
+                longPress.minimumPressDuration = 1.0
+                cell.addGestureRecognizer(longPress)
+                
                 if let image = managedTask.valueForKey("smallTaskImage") as? NSData{
                     
                     taskImage = prepareImageForPresentation(image)
-                    print(taskImage?.size)
                 }
                 
                 let tableColor: UIColor = {
                     switch task.priority{
-                    case .Normal?: return UIColor.whiteColor()
-                    case .High?: return UIColor.orangeColor()
-                    case .Mega?: return UIColor.redColor()
+                    case .Normal?: return UIColor.init(colorLiteralRed: (255/255), green: (250/255), blue: (250/255), alpha: 0.8)
+                    case .High?: return UIColor.init(colorLiteralRed: (255/255), green: (69/255), blue: (0/255), alpha: 0.8)
+                    case .Mega?: return UIColor.init(colorLiteralRed: 1, green: 0, blue: 0, alpha: 0.8)
                     default: return UIColor.whiteColor()
                     }
                 }()
                 
                 if task.status?.rawValue == "Finished"{
-                    cell.backgroundColor = UIColor.lightGrayColor()
+                    cell.taskNameLabel.textColor = UIColor.lightGrayColor()
+                    cell.backgroundColor = UIColor.init(colorLiteralRed: (255/255), green: (250/255), blue: (250/255), alpha: 0.8)
                 }else if task.status?.rawValue != "Finished"{
+                    cell.taskNameLabel.textColor = UIColor.blackColor()
                     cell.backgroundColor = tableColor
                 }
                 cell.setCell(task, image: taskImage)
         }
         return cell
     }
-    
+    /*
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if let sections = fetchedTaskResultsController.sections {
             let currentSection = sections[section]
@@ -175,7 +210,7 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
         }
         return nil
     }
-
+*/
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == UITableViewCellEditingStyle.Delete{
             if let managedTask = fetchedTaskResultsController.objectAtIndexPath(indexPath) as? NSManagedObject{
