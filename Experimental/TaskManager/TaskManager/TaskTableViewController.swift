@@ -55,6 +55,11 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "taskDeletedHandler:", name: "taskDeleted", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "taskChangedHandler:", name: "taskChanged", object: nil)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "appInterupted", name:UIApplicationWillResignActiveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "appBecameActive", name:UIApplicationDidBecomeActiveNotification, object: nil)
+        
+        
+        
         do {
             try fetchedTaskResultsController.performFetch()
             
@@ -168,7 +173,7 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
         var taskImage: UIImage? = nil
         let cell: TaskTableViewCell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! TaskTableViewCell
         
-        let resultsDict = Dictionary <NSDate, Task>()
+        //let resultsDict = Dictionary <NSDate, Task>()
         
         if let managedTask = fetchedTaskResultsController.objectAtIndexPath(indexPath) as? NSManagedObject,
             let task = managedTask.valueForKey("task") as? Task{
@@ -192,9 +197,11 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
                 }()
                 
                 if task.status?.rawValue == "Finished"{
+                    cell.accessoryType = .Checkmark
                     cell.taskNameLabel.textColor = UIColor.lightGrayColor()
                     cell.backgroundColor = UIColor.init(colorLiteralRed: (255/255), green: (250/255), blue: (250/255), alpha: 0.8)
                 }else if task.status?.rawValue != "Finished"{
+                    cell.accessoryType = .None
                     cell.taskNameLabel.textColor = UIColor.blackColor()
                     cell.backgroundColor = tableColor
                 }
@@ -212,8 +219,8 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
     }
 */
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == UITableViewCellEditingStyle.Delete{
-            if let managedTask = fetchedTaskResultsController.objectAtIndexPath(indexPath) as? NSManagedObject{
+        if let managedTask = fetchedTaskResultsController.objectAtIndexPath(indexPath) as? NSManagedObject{
+            if editingStyle == UITableViewCellEditingStyle.Delete{
                 do {
                     context.deleteObject(managedTask)
                     try self.context.save()
@@ -262,5 +269,18 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
             print("An error while saving at memory warning")
         }
         context.reset()
+        self.taskTableView.reloadData()
+    }
+    
+    func appInterupted(){
+        print("app interrupted")
+    }
+    
+    func appBecameActive(){
+        print("app active")
+    }
+    
+    deinit{
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }
