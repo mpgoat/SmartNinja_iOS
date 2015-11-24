@@ -27,12 +27,16 @@ class ImageDetailViewController: UIViewController, UIScrollViewDelegate{
         imageScrollView.contentSize = self.view.frame.size
         imageScrollView.bounces = true
         imageScrollView.bouncesZoom = true
-        imageScrollView.minimumZoomScale = 0.2
-        imageScrollView.maximumZoomScale = 3.0
-        imageScrollView.zoomScale = 0.01
         imageScrollView.showsHorizontalScrollIndicator=true
         imageScrollView.showsVerticalScrollIndicator=true
         imageScrollView.delegate=self
+        
+        let widthScale = self.view.frame.size.width / (imageDetailView?.frame.size.width)!
+        let heightScale = (self.view.frame.size.height - self.navigationController!.navigationBar.frame.height) / (imageDetailView?.frame.size.height)!
+        
+        imageScrollView.minimumZoomScale = min(widthScale, heightScale)
+        imageScrollView.maximumZoomScale = imageScrollView.minimumZoomScale + 3.0
+        imageScrollView.zoomScale = 0.01
         
         //rotation
         let rotationRecogniser = UIRotationGestureRecognizer(target: self, action: "viewRotated:")
@@ -44,7 +48,12 @@ class ImageDetailViewController: UIViewController, UIScrollViewDelegate{
         //add all the things
         self.view.addGestureRecognizer(tapRecogniser)
         imageScrollView.addGestureRecognizer(rotationRecogniser)
-        self.view.addSubview(imageScrollView);
+        self.view.addSubview(imageScrollView)
+    }
+    
+    override func viewDidLayoutSubviews(){
+        super.viewDidLayoutSubviews()
+        
     }
     
     func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
@@ -54,7 +63,7 @@ class ImageDetailViewController: UIViewController, UIScrollViewDelegate{
     func viewToInitial(){
         UIView.animateWithDuration(0.3, delay: 0, options: [], animations: {
             self.imageScrollView.transform = CGAffineTransformMakeRotation(0.0)
-            }, completion: { _ in })
+        }, completion: { _ in })
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {

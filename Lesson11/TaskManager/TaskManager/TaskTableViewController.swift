@@ -74,9 +74,9 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
             let touchPoint = gestureRecognizer.locationInView(self.view)
             if let indexPath = taskTableView.indexPathForRowAtPoint(touchPoint) {
                 
-                let alert = UIAlertController(title: "Delete Task?", message:"Please confirm Task Deletion", preferredStyle: .Alert)
+                let alert = UIAlertController(title: "Delete Task?", message:"Please confirm Task Deletion", preferredStyle: .ActionSheet)
                 
-                alert.addAction(UIAlertAction(title: "OK", style: .Default) { _ in
+                alert.addAction(UIAlertAction(title: "Delete", style: .Destructive) { _ in
                     if let managedTask = self.fetchedTaskResultsController.objectAtIndexPath(indexPath) as? NSManagedObject{
                         do {
                             self.context.deleteObject(managedTask)
@@ -115,6 +115,8 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
         self.taskTableView.
         self.taskTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
         */
+        //self.taskTableView.deleteSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+
         dispatch_async(GlobalMainQueue){
             do {
                 print("Task Deleted!")
@@ -229,6 +231,7 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
                 } catch {
                     print("An error while saving after deletion")
                 }
+                //self.taskTableView.deleteSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
                 self.taskTableView.reloadData()
             }
         }

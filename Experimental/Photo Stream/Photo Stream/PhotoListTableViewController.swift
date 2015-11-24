@@ -29,6 +29,7 @@ class PhotoListTableViewController: UITableViewController {
         
         //tableView.estimatedRowHeight = 500.0
         //tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.tableFooterView = UIView()
         
         manager.getPhotos(["tag":"porsche","image_size":"4","rpp":"200"], completion: { (photos, error) -> Void in
             self.photos = photos
