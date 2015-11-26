@@ -163,9 +163,9 @@ class WeatherViewController: UIViewController {
         weatherLabel.text = ""
         temperatureLabel.text = ""
         //self.locationLabel.alpha = 0.0
-        self.weatherLabel.alpha = 0.0
-        self.iconWebView.alpha = 0.0
-        self.temperatureLabel.alpha = 0.0
+        //self.weatherLabel.alpha = 0.0
+        //self.iconWebView.alpha = 0.0
+        //self.temperatureLabel.alpha = 0.0
     }
     
     func locationChangedHandler(notification: NSNotification){
@@ -179,13 +179,19 @@ class WeatherViewController: UIViewController {
     
     func appInterupted(){
         print("app interrupted")
+        if timerOn == true{
+        print("timer paused")
         timer!.invalidate()
+        }
     }
     
     func appBecameActive(){
         print("app active")
         if timerOn == true{
+            print("timer resumed")
             NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: "updateWeather", userInfo: nil, repeats: true)
+        }else{
+            updateWeather()
         }
     }
     
