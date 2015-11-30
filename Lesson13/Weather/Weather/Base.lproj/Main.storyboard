@@ -8,7 +8,6 @@
         <!--Present Weather View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <viewController id="BYZ-38-t0r" customClass="PresentWeatherViewController" customModule="Weather" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
@@ -18,10 +17,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" alpha="0.0" tag="1" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Ljubljana2" translatesAutoresizingMaskIntoConstraints="NO" id="BuR-CD-VlU">
+                            <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BuR-CD-VlU">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <animations/>
                             </imageView>
+                            <visualEffectView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SW5-ck-SvP">
+                                <rect key="frame" x="0.0" y="104" width="600" height="250"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="8wQ-2E-mQf">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="250"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <animations/>
+                                </view>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="250" id="jTA-jJ-hOz"/>
+                                </constraints>
+                                <blurEffect style="light"/>
+                            </visualEffectView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ucV-Eq-sTy">
                                 <rect key="frame" x="226" y="307" width="147" height="42"/>
                                 <animations/>
@@ -34,7 +46,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="temp" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EFD-Wo-XIM">
-                                <rect key="frame" x="254" y="118" width="91" height="48"/>
+                                <rect key="frame" x="255" y="118" width="90" height="48"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -69,6 +81,9 @@
                         <constraints>
                             <constraint firstItem="NW3-AC-R8B" firstAttribute="centerX" secondItem="2Zd-rn-dpr" secondAttribute="centerX" id="447-oJ-keF"/>
                             <constraint firstItem="EFD-Wo-XIM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="59a-XD-6dx"/>
+                            <constraint firstItem="SW5-ck-SvP" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="40" id="5VK-Yt-xhT"/>
+                            <constraint firstItem="SW5-ck-SvP" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ALH-Rb-krC"/>
+                            <constraint firstAttribute="trailing" secondItem="SW5-ck-SvP" secondAttribute="trailing" id="BvE-NR-fYt"/>
                             <constraint firstItem="2Zd-rn-dpr" firstAttribute="centerX" secondItem="EFD-Wo-XIM" secondAttribute="centerX" id="CgM-CM-ykH"/>
                             <constraint firstItem="2Zd-rn-dpr" firstAttribute="top" secondItem="EFD-Wo-XIM" secondAttribute="bottom" constant="21" id="Jo8-KK-z9Q"/>
                             <constraint firstItem="FmP-si-C0E" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="40" id="KPc-5i-hSN"/>
@@ -83,10 +98,12 @@
                             <constraint firstItem="FmP-si-C0E" firstAttribute="leading" secondItem="EFD-Wo-XIM" secondAttribute="trailing" constant="6" id="pCO-R1-gNp"/>
                             <constraint firstItem="BuR-CD-VlU" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="pld-cC-b1I"/>
                             <constraint firstItem="EFD-Wo-XIM" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="54" id="urR-Mc-UXv"/>
+                            <constraint firstItem="SW5-ck-SvP" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="wsP-NJ-PoH"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="HfS-hT-cgX"/>
                     <connections>
+                        <outlet property="backgroundImage" destination="BuR-CD-VlU" id="a9d-uH-fA3"/>
                         <outlet property="getWeatherButton" destination="ucV-Eq-sTy" id="2dP-g8-Aul"/>
                         <outlet property="iconWebView" destination="FmP-si-C0E" id="MaU-rt-SIN"/>
                         <outlet property="locationLabel" destination="NW3-AC-R8B" id="djj-hY-ijl"/>
@@ -94,6 +111,7 @@
                         <outlet property="weatherLabel" destination="2Zd-rn-dpr" id="56M-au-YAz"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2372" y="1274"/>
         </scene>
@@ -130,7 +148,7 @@
                                 <rect key="frame" x="20" y="148" width="560" height="21"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -156,7 +174,7 @@
             </objects>
             <point key="canvasLocation" x="2372" y="586"/>
         </scene>
-        <!--Weather Location Table View Controller-->
+        <!--weather-->
         <scene sceneID="dLl-fH-ihW">
             <objects>
                 <tableViewController id="NBq-Pv-cbf" customClass="WeatherLocationTableViewController" customModule="Weather" customModuleProvider="target" sceneMemberID="viewController">
@@ -178,7 +196,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ljv-Ua-VCT">
@@ -186,7 +204,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -203,8 +221,8 @@
                             <outlet property="delegate" destination="NBq-Pv-cbf" id="hwS-1d-BVc"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="Ref-zR-9Fr">
-                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="refresh" id="AKb-hM-NT0">
+                    <navigationItem key="navigationItem" title="weather" id="Ref-zR-9Fr">
+                        <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="AKb-hM-NT0">
                             <connections>
                                 <action selector="refreshAction:" destination="NBq-Pv-cbf" id="p2O-L5-51D"/>
                             </connections>
@@ -240,7 +258,4 @@
             <point key="canvasLocation" x="866" y="1274"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="Ljubljana2" width="5100" height="3400"/>
-    </resources>
 </document>

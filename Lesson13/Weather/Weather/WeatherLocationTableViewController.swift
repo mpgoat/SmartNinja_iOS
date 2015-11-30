@@ -60,6 +60,16 @@ class WeatherLocationTableViewController: UITableViewController, WeatherDataDele
         super.viewDidLoad()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "appInterupted", name:UIApplicationWillResignActiveNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "appBecameActive", name:UIApplicationDidBecomeActiveNotification, object: nil)
+        
+        refreshControl = UIRefreshControl()
+        refreshControl!.addTarget(self, action: "refresh", forControlEvents: .ValueChanged)
+        
+        tableView.tableFooterView = UIView()
+    }
+    
+    func refresh () {
+        self.tableView.reloadData()
+        self.refreshControl!.endRefreshing()
     }
     
     // MARK: - Table view data source

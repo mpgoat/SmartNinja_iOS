@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreGraphics
+import AlamofireImage
 
 
 
@@ -16,11 +17,15 @@ class PresentWeatherViewController: UIViewController {
     lazy var weather = Weather()
     var city : String = "ljubljana"
     
+    let manager : PhotoManager = PhotoManager()
+    var photos: [Photo]!
+    
     var timer: NSTimer? = nil
     var timer2: NSTimer? = nil
     let interval: NSTimeInterval = 10
     var timerOn: Bool = false
 
+    @IBOutlet weak var backgroundImage: UIImageView!
     
     @IBAction func getWeather(sender: UIButton) {
         if timerOn == false {
@@ -56,6 +61,7 @@ class PresentWeatherViewController: UIViewController {
     
     func updateWeather(){
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+
         weather.getWeatherForCity(city){
             (tempInfo: JSON?) in
             if let podatki = tempInfo{
@@ -129,6 +135,11 @@ class PresentWeatherViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         updateWeather()
+        manager.getPhotos(["tag":"\(city)","image_size":"6","rpp":"1"], completion: { (photos, error) -> Void in
+            if (error == nil) && !photos.isEmpty{
+                self.backgroundImage.af_setImageWithURL(NSURL(string: photos[0].imageurl!)!)
+            }
+        })
     }
 
     
