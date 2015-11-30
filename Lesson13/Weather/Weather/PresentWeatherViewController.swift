@@ -36,6 +36,7 @@ class PresentWeatherViewController: UIViewController {
             sender.setTitle("Stop Updating!", forState: .Normal)
         }
         else if timerOn == true{
+            timerOn = false
             print("timer off")
             timer!.invalidate()
             timer = nil
@@ -134,12 +135,8 @@ class PresentWeatherViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
+        backgroundImage.bounds.size = self.view.bounds.size
         updateWeather()
-        manager.getPhotos(["tag":"\(city)","image_size":"6","rpp":"1"], completion: { (photos, error) -> Void in
-            if (error == nil) && !photos.isEmpty{
-                self.backgroundImage.af_setImageWithURL(NSURL(string: photos[0].imageurl!)!)
-            }
-        })
     }
 
     
@@ -162,7 +159,6 @@ class PresentWeatherViewController: UIViewController {
         locationLabel.text = "Ljubljana"
         weatherLabel.text = ""
         temperatureLabel.text = ""
-
     }
     
     func locationChangedHandler(notification: NSNotification){

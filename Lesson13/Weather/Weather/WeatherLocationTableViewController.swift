@@ -135,7 +135,13 @@ class WeatherLocationTableViewController: UITableViewController, WeatherDataDele
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showWeather"{
             let destinationVC = segue.destinationViewController as! PresentWeatherViewController
-            destinationVC.city = sender!.textLabel!!.text!
+            let city = sender!.textLabel!!.text!
+            destinationVC.city = city
+            destinationVC.manager.getPhotos(["tag":"\(city)","image_size":"6","rpp":"1"], completion: { (photos, error) -> Void in
+                if (error == nil) && !photos.isEmpty{
+                    destinationVC.backgroundImage.af_setImageWithURL(NSURL(string: photos[0].imageurl!)!)
+                }
+            })
         }
     }
     
