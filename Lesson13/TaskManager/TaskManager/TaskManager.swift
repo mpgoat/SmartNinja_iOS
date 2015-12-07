@@ -20,19 +20,28 @@ class TaskManager{
     
     //lazy var tasks = [NSManagedObject]()
     
-    func saveTaskToCoreData(inputTask: Task?, inputImage: UIImage?){
+    func saveTaskToCoreData(inputTask: Task?, inputImages: [UIImage]?){
         
         //var imageData: NSData?
+        let imgShared = Image.sharedInstance
+        var imagePaths: [String]?
         var smallImageData: NSData?
         
+        if let images = inputImages{
+            for img:UIImage in images{
+                let imgPath = imgShared.getImagePath(img)
+                imagePaths?.append(imgPath)
+            }
+        }
+        
         if let image = inputImage{
-            //make small version of photo
             let smallImage = resizeImage(image, newHeight: 300.0)
             
             //imageData = self.prepareImageForSaving(image)
             smallImageData = self.prepareImageForSaving(smallImage)
             //print(smallImageData!)
         }
+        
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
         
@@ -43,6 +52,16 @@ class TaskManager{
         //let image = NSManagedObject(entity: ImagesEntity!, insertIntoManagedObjectContext: managedContext)
         
         //image.setValue(imageData, forKey: "taskImage")
+        
+        do{
+            let json = try NSString(data: NSJSONSerialization.dataWithJSONObject(["task":(inputTask?.taskName)!], options: NSJSONWritingOptions(rawValue: 0)), encoding: NSUTF8StringEncoding)
+            print(json)
+            task.setValue(json, forKey: "json")
+        }
+        catch{
+            print("error")
+        }
+
         task.setValue(inputTask, forKey: "task")
         task.setValue(inputTask?.priority?.rawValue, forKey: "priority")
         task.setValue(inputTask?.dateOfCreation, forKey: "dateOfCreation")

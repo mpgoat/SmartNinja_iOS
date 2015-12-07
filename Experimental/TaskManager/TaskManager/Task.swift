@@ -24,8 +24,7 @@ enum Status: String{
 
 //NSObject ze implementira svoj equatable conformance
 class Task: NSObject, NSCoding{
-    
-    var image: UIImage?
+
     var dateOfCreation: NSDate
     var dateOfLastChange: NSDate
     
@@ -65,6 +64,7 @@ class Task: NSObject, NSCoding{
         self.status = status
         self.dateOfCreation = NSDate()
         self.dateOfLastChange = NSDate()
+        
     }
 /*
     convenience init(name: String){
@@ -78,7 +78,7 @@ class Task: NSObject, NSCoding{
         details = taskDecoder.decodeObjectForKey("details") as! String
         dateOfCreation = taskDecoder.decodeObjectForKey("dateOfCreation") as! NSDate
         dateOfLastChange = taskDecoder.decodeObjectForKey("dateOfLastChange") as! NSDate
-        image = taskDecoder.decodeObjectForKey("image") as? UIImage
+        //image = taskDecoder.decodeObjectForKey("image") as? UIImage
     }
     
     func encodeWithCoder(taskCoder: NSCoder) {
@@ -88,8 +88,9 @@ class Task: NSObject, NSCoding{
         taskCoder.encodeObject(status!.rawValue, forKey: "status")
         taskCoder.encodeObject(dateOfCreation, forKey: "dateOfCreation")
         taskCoder.encodeObject(dateOfLastChange, forKey: "dateOfLastChange")
-        taskCoder.encodeObject(image, forKey: "image")
+        //taskCoder.encodeObject(image, forKey: "image")
     }
+
     /*
     override func isEqual(object: AnyObject?) -> Bool {
         if let firstTask = object as? Task {

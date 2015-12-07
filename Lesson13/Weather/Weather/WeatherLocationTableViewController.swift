@@ -12,6 +12,7 @@ class WeatherLocationTableViewController: UITableViewController, WeatherDataDele
     
     lazy var downloadQueue:NSOperationQueue = {
         var queue = NSOperationQueue()
+        queue.qualityOfService = .Background
         queue.name = "Download queue"
         queue.maxConcurrentOperationCount = 2
         return queue

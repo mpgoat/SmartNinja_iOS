@@ -86,7 +86,9 @@ class TaskTableViewController:  UIViewController, UITableViewDataSource, UITable
                         } catch {
                             print("An error while saving after deletion")
                         }
-                        self.taskTableView.reloadData()
+                        
+                        self.taskTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                        self.taskTableView.deleteSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
                     }
                 })
                 alert.addAction(UIAlertAction(title: "Cancel", style: .Default) { _ in })

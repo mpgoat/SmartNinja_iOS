@@ -135,7 +135,6 @@ class PresentWeatherViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        backgroundImage.bounds.size = self.view.bounds.size
         updateWeather()
     }
 

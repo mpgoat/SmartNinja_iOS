@@ -20,7 +20,7 @@ class TaskViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var priority = Priority.Normal
     let imagePicker = UIImagePickerController()
     //let managedContext = AppDelegate().managedObjectContext
-    var taskImage: UIImage? = nil
+    var taskImages = [UIImage]()
     
     @IBOutlet weak var addTaskButton: UIButton!
     @IBOutlet weak var taskImageView: UIImageView!
@@ -29,10 +29,33 @@ class TaskViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     @IBOutlet weak var detailsTextField: UITextField!
     @IBOutlet weak var showLastTask: UILabel!
     @IBOutlet weak var prioritySegment: UISegmentedControl!
+    @IBOutlet weak var pickImageButton: UIButton!
+    
+    
     @IBAction func selctImage(sender: UIButton) {
-        imagePicker.allowsEditing = false
-        imagePicker.sourceType = .PhotoLibrary
-        presentViewController(imagePicker, animated: true, completion: nil)
+        
+        let alert = UIAlertController(title: "Choose action:", message:"", preferredStyle: .ActionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Camera", style: .Default) { _ in
+            self.imagePicker.allowsEditing = false
+            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
+                self.imagePicker.sourceType = .Camera
+            } else {
+                self.imagePicker.sourceType = .PhotoLibrary
+            }
+            self.presentViewController(self.imagePicker, animated: true, completion: nil)
+            })
+        
+        alert.addAction(UIAlertAction(title: "From Library", style: .Default) { _ in
+            self.imagePicker.allowsEditing = false
+            self.imagePicker.sourceType = .PhotoLibrary
+            self.presentViewController(self.imagePicker, animated: true, completion: nil)
+            })
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Default) { _ in })
+        self.presentViewController(alert, animated: true){}
+        
+        
     }
     @IBAction func selectPrioritySegment(sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex{
@@ -57,8 +80,13 @@ class TaskViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                 createAlert("Task Name is Empty!", alertMessage: "Please enter a Task name", action: .okAction)
             }
             else{
-                let newTask = Task(taskName: taskName, priority: self.priority, details: detailsText, status: .Started, image: self.taskImage)
-                self.taskManager.addTask(newTask, addedImage: self.taskImage)
+                let newTask = Task(taskName: taskName, priority: self.priority, details: detailsText, status: .Started, image: nil)
+                if taskImages.isEmpty{
+                   self.taskManager.addTask(newTask, addedImage: nil)
+                }else{
+                    self.taskManager.addTask(newTask, addedImage: self.taskImages)
+                }
+                
                 self.updateDisplay()
                 
                 UIView.animateWithDuration(0.1, delay: 0, options: [], animations: {
@@ -112,10 +140,15 @@ class TaskViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        if taskImages.count > 0{
+            pickImageButton.setTitle("Pick Another Image", forState: .Normal)
+        }
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             taskImageView.contentMode = .ScaleAspectFit
             taskImageView.image = pickedImage
-            taskImage = pickedImage
+            taskImages.append(pickedImage)
+            print(taskImages)
+            print(taskImages.count)
             print("success!")
         }
         dismissViewControllerAnimated(true, completion: nil)

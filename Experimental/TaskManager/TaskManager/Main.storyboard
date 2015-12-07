@@ -287,6 +287,7 @@
                     <connections>
                         <outlet property="addTaskButton" destination="n3U-6g-o05" id="VuH-B6-svh"/>
                         <outlet property="detailsTextField" destination="YDT-Nc-Au8" id="kLY-zB-rmJ"/>
+                        <outlet property="pickImageButton" destination="fb5-OI-9hg" id="j7c-aD-eZA"/>
                         <outlet property="prioritySegment" destination="uND-Ju-2xf" id="4fB-3d-9n6"/>
                         <outlet property="showAlerts" destination="UN4-bM-9Fl" id="OBM-bh-ueJ"/>
                         <outlet property="showLastTask" destination="0PU-JZ-eBl" id="j5w-aP-eJH"/>
