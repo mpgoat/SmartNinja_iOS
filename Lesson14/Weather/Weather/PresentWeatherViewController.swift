@@ -39,7 +39,7 @@ class PresentWeatherViewController: UIViewController {
             print("timer on")
             timerOn = true
             updateWeather()
-            timer = NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: "updateWeather", userInfo: nil, repeats: true)
+            timer = NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: "updateWeather2", userInfo: nil, repeats: true)
             sender.setTitle("Stop Updating!", forState: .Normal)
         }
         else if timerOn == true{
@@ -65,6 +65,13 @@ class PresentWeatherViewController: UIViewController {
                     self.temperatureLabel.alpha = 1.0
                     }, completion: {_ in })
         })
+    }
+    
+    func updateWeather2(){
+        let operation = UpdateWeather()
+        operation.city = city
+        
+        downloadQueue.addOperation(operation)
     }
     
     func updateWeather(){
